@@ -22,9 +22,9 @@ void Error_Handler(void)
 
 uint8_t Checksumcrc(uint8_t *aData, uint8_t StartIndex, uint8_t DataLength);
 
-//buf:Êý¾Ý»º´æÇø;	 
-//·µ»ØÖµ:0,ÎÞÊý¾Ý±»ÊÕµ½;
-//		 ÆäËû,½ÓÊÕµÄÊý¾Ý³¤¶È;
+//buf:ï¿½ï¿½ï¿½Ý»ï¿½ï¿½ï¿½ï¿½ï¿½;	 
+//ï¿½ï¿½ï¿½ï¿½Öµ:0,ï¿½ï¿½ï¿½ï¿½ï¿½Ý±ï¿½ï¿½Õµï¿½;
+//		 ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½ï¿½Ý³ï¿½ï¿½ï¿½;
 static u8 CAN1_Receive_Msg(u8 *std, u8 *buf)
 {
  	u32 i;
@@ -76,7 +76,7 @@ void Read_PID(MotorId Motor_ID,motor_pid* pid)
 	 Error_Handler();
  }
  
-	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//¶ÁÈ¡½ÓÊÕµ½ÐÅÏ¢
+	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½Ï¢
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -94,7 +94,7 @@ void Read_PID(MotorId Motor_ID,motor_pid* pid)
 	*pid = getpid;
 }
 //****************************************************************
-//Êý¾ÝÐ´ÈëRAM£¬¶Ïµçºó²ÎÊýÊ§Ð§
+//ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½RAMï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½Ê§Ð§
 //****************************************************************
 void Write_PID_to_RAM(MotorId Motor_ID,motor_pid pid)
 {
@@ -142,7 +142,7 @@ void Write_PID_to_RAM(MotorId Motor_ID,motor_pid pid)
 	}	
 }
 //****************************************************************
-//Êý¾ÝÐ´ÈëROM£¬¶Ïµçºó²ÎÊýÈÔÈ»ÓÐÐ§
+//ï¿½ï¿½ï¿½ï¿½Ð´ï¿½ï¿½ROMï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½È»ï¿½ï¿½Ð§
 //**************************************************************** 
 void Write_PID_to_ROM(MotorId Motor_ID,motor_pid pid)
 {
@@ -190,7 +190,7 @@ void Write_PID_to_ROM(MotorId Motor_ID,motor_pid pid)
 }
 
 //****************************************************************
-//¶ÁÈ¡µ±Ç°µç»úµÄ¼ÓËÙ¶È²ÎÊý
+//ï¿½ï¿½È¡ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ù¶È²ï¿½ï¿½ï¿½
 //**************************************************************** 
 void Read_Accel(MotorId Motor_ID,int32_t* Accel)
 {
@@ -220,7 +220,7 @@ void Read_Accel(MotorId Motor_ID,int32_t* Accel)
 	 Error_Handler();
  }
  
-	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//¶ÁÈ¡½ÓÊÕµ½ÐÅÏ¢
+	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½Ï¢
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -229,12 +229,12 @@ void Read_Accel(MotorId Motor_ID,int32_t* Accel)
 		}
 		printf("\r\n");
 	}
-//¼ÓËÙ¶ÈÕ¼4×Ö½Ú£¬4-7data£¬µÍÎ»ÔÚÇ°
+//ï¿½ï¿½ï¿½Ù¶ï¿½Õ¼4ï¿½Ö½Ú£ï¿½4-7dataï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½Ç°
 	*Accel = (RxData[7]<<(4*3))|(RxData[6]<<(4*2))|(RxData[5]<<(4*1))|(RxData[4]<<(4*0));
 }
 
 //****************************************************************
-//Ð´Èëµç»úµÄ¼ÓËÙ¶È²ÎÊý£¬¶ÏµçºóÊ§Ð§
+//Ð´ï¿½ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ù¶È²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½Ê§Ð§
 //**************************************************************** 
 void Write_Accel_to_RAM(MotorId Motor_ID,int32_t Accel)
 {
@@ -253,7 +253,7 @@ void Write_Accel_to_RAM(MotorId Motor_ID,int32_t Accel)
   TxData[1] = 0;
   TxData[2] = 0;
   TxData[3] = 0;
-  TxData[4] = (uint8_t)((Accel&0x000F)>>0);//·Ö±ð»ñÈ¡AccelÃ¿¸ö×Ö½ÚµÄÊý¾Ý
+  TxData[4] = (uint8_t)((Accel&0x000F)>>0);//ï¿½Ö±ï¿½ï¿½È¡AccelÃ¿ï¿½ï¿½ï¿½Ö½Úµï¿½ï¿½ï¿½ï¿½ï¿½
   TxData[5] = (uint8_t)((Accel&0x00F0)>>4);
   TxData[6] = (uint8_t)((Accel&0x0F00)>>8);
   TxData[7] = (uint8_t)((Accel&0xF000)>>12);
@@ -282,7 +282,7 @@ void Write_Accel_to_RAM(MotorId Motor_ID,int32_t Accel)
 }
 
 //****************************************************************
-//¶ÁÈ¡µç»úµÄ¼ÓËÙ¶È²ÎÊý
+//ï¿½ï¿½È¡ï¿½ï¿½ï¿½ï¿½Ä¼ï¿½ï¿½Ù¶È²ï¿½ï¿½ï¿½
 //**************************************************************** 
 void Read_Encoder(MotorId Motor_ID,motor_Encoder* Encoder)
 {
@@ -313,7 +313,7 @@ void Read_Encoder(MotorId Motor_ID,motor_Encoder* Encoder)
 	 Error_Handler();
  }
  
-	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//¶ÁÈ¡½ÓÊÕµ½ÐÅÏ¢
+	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½Ï¢
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -330,7 +330,7 @@ void Read_Encoder(MotorId Motor_ID,motor_Encoder* Encoder)
 }
 
 //****************************************************************
-//Ð´Èë±àÂëÆ÷µÄÁãÎ»Æ«ÒÆ
+//Ð´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»Æ«ï¿½ï¿½
 //****************************************************************
 void Write_Expect_Encoder_to_ROM(MotorId Motor_ID,motor_Encoder Encoder)
 {
@@ -377,7 +377,7 @@ void Write_Expect_Encoder_to_ROM(MotorId Motor_ID,motor_Encoder Encoder)
 	}	  
 }
 //****************************************************************
-//Ð´Èëµ±Ç°±àÂëÆ÷Î»ÖÃ×÷Îª³õÊ¼Î»ÖÃÐ´ÈëROM£¨µç»úÁãµã±ê¶¨£©£¬ÖØÐÂÉÏµçÉúÐ§
+//Ð´ï¿½ëµ±Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½Ê¼Î»ï¿½ï¿½Ð´ï¿½ï¿½ROMï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ê¶¨ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ïµï¿½ï¿½ï¿½Ð§
 //****************************************************************
 void Write_Current_Encoder_to_ROM(MotorId Motor_ID,motor_Encoder *Encoder)
 {
@@ -408,7 +408,7 @@ void Write_Current_Encoder_to_ROM(MotorId Motor_ID,motor_Encoder *Encoder)
 	 Error_Handler();
  }
  
-	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//¶ÁÈ¡½ÓÊÕµ½ÐÅÏ¢
+	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½Ï¢
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -421,7 +421,7 @@ void Write_Current_Encoder_to_ROM(MotorId Motor_ID,motor_Encoder *Encoder)
 	*Encoder = getEncoder;  
 }
 //****************************************************************
-//¶ÁÈ¡µ±Ç°µç»ú¶àÈ¦¾ø¶Ô½Ç¶ÈÖµ£¬µ¥Î»0.01¡ã/LSB£¬ÕýÖµË³Ê±ÕëÀÛ¼Æ½Ç¶È£¬¸ºÖµÄæÊ±ÕëÀÛ¼Æ½Ç¶È
+//ï¿½ï¿½È¡ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½È¦ï¿½ï¿½ï¿½Ô½Ç¶ï¿½Öµï¿½ï¿½ï¿½ï¿½Î»0.01ï¿½ï¿½/LSBï¿½ï¿½ï¿½ï¿½ÖµË³Ê±ï¿½ï¿½ï¿½Û¼Æ½Ç¶È£ï¿½ï¿½ï¿½Öµï¿½ï¿½Ê±ï¿½ï¿½ï¿½Û¼Æ½Ç¶ï¿½
 //****************************************************************
 void Read_MotorAngle(MotorId Motor_ID,int64_t* angle)
 {
@@ -451,7 +451,7 @@ void Read_MotorAngle(MotorId Motor_ID,int64_t* angle)
 	 Error_Handler();
  }
  
-	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//¶ÁÈ¡½ÓÊÕµ½ÐÅÏ¢
+	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½Ï¢
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -460,12 +460,12 @@ void Read_MotorAngle(MotorId Motor_ID,int64_t* angle)
 		}
 		printf("\r\n");
 	}
-//½Ç¶ÈÕ¼6×Ö½Ú£¬2-7data£¬µÍÎ»ÔÚÇ°
+//ï¿½Ç¶ï¿½Õ¼6ï¿½Ö½Ú£ï¿½2-7dataï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½Ç°
 	*angle = (RxData[4]<<(4*3))|(RxData[3]<<(4*2))|(RxData[2]<<(4*1))|(RxData[1]<<(4*0)) \
             |(RxData[7]<<(4*6))|(RxData[6]<<(4*5))|(RxData[5]<<(4*4));
 }
 //****************************************************************
-//¶ÁÈ¡µ±Ç°µç»úµ¥È¦½Ç¶ÈÖµ£¬µ¥Î»0.01¡ã/LSB£¬±àÂëÆ÷ÁãµãÎªÆðµã£¬Ë³Ê±ÕëÔö¼Ó
+//ï¿½ï¿½È¡ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½È¦ï¿½Ç¶ï¿½Öµï¿½ï¿½ï¿½ï¿½Î»0.01ï¿½ï¿½/LSBï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªï¿½ï¿½ã£¬Ë³Ê±ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
 //****************************************************************
 void Read_CircleAngle(MotorId Motor_ID,uint16_t* angle)
 {
@@ -495,7 +495,7 @@ void Read_CircleAngle(MotorId Motor_ID,uint16_t* angle)
 	 Error_Handler();
  }
  
-	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//¶ÁÈ¡½ÓÊÕµ½ÐÅÏ¢
+	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½Ï¢
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -508,7 +508,7 @@ void Read_CircleAngle(MotorId Motor_ID,uint16_t* angle)
 }
 
 //****************************************************************
-//¶ÁÈ¡µ±Ç°µç»úµÄÎÂ¶È£¬µçÑ¹ºÍ´íÎó×´Ì¬Î»
+//ï¿½ï¿½È¡ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¶È£ï¿½ï¿½ï¿½Ñ¹ï¿½Í´ï¿½ï¿½ï¿½×´Ì¬Î»
 //****************************************************************
 void Read_MotorState1(MotorId Motor_ID,motor_state* state)
 {
@@ -539,7 +539,7 @@ void Read_MotorState1(MotorId Motor_ID,motor_state* state)
 	 Error_Handler();
  }
  
-	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//¶ÁÈ¡½ÓÊÕµ½ÐÅÏ¢
+	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½Ï¢
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -556,7 +556,7 @@ void Read_MotorState1(MotorId Motor_ID,motor_state* state)
 }
 
 //****************************************************************
-//¶ÁÈ¡µ±Ç°µç»úµÄÎÂ¶È£¬×ª¾ØµçÁ÷Iq£¬×ªËÙ£¬±àÂëÆ÷Î»ÖÃ
+//ï¿½ï¿½È¡ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¶È£ï¿½×ªï¿½Øµï¿½ï¿½ï¿½Iqï¿½ï¿½×ªï¿½Ù£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Î»ï¿½ï¿½
 //****************************************************************
 void Read_MotorState2(MotorId Motor_ID,motor_state* state)
 {
@@ -587,7 +587,7 @@ void Read_MotorState2(MotorId Motor_ID,motor_state* state)
 	 Error_Handler();
  }
  
-	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//¶ÁÈ¡½ÓÊÕµ½ÐÅÏ¢
+	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½Ï¢
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -604,7 +604,7 @@ void Read_MotorState2(MotorId Motor_ID,motor_state* state)
 }
 
 //****************************************************************
-//¶ÁÈ¡µ±Ç°µç»úµÄÎÂ¶È£¬ABCÏàµçÁ÷
+//ï¿½ï¿½È¡ï¿½ï¿½Ç°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Â¶È£ï¿½ABCï¿½ï¿½ï¿½ï¿½ï¿½
 //****************************************************************
 void Read_MotorState3(MotorId Motor_ID,motor_state* state)
 {
@@ -635,7 +635,7 @@ void Read_MotorState3(MotorId Motor_ID,motor_state* state)
 	 Error_Handler();
  }
  
-	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//¶ÁÈ¡½ÓÊÕµ½ÐÅÏ¢
+	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½Ï¢
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -652,7 +652,7 @@ void Read_MotorState3(MotorId Motor_ID,motor_state* state)
 }
 
 //****************************************************************
-//Çå³ýµç»úµÄ´íÎó×´Ì¬£¬µç»úÊÕµ½ºó·µ»Ø
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ä´ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Õµï¿½ï¿½ó·µ»ï¿½
 //****************************************************************
 void Clear_errorState(MotorId Motor_ID)
 {
@@ -684,7 +684,7 @@ void Clear_errorState(MotorId Motor_ID)
 }
 
 //****************************************************************
-//¹Ø±Õµç»ú£¬Çå³ý¿ØÖÆÖ¸Áî
+//ï¿½Ø±Õµï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
 //****************************************************************
 void Motor_Off(MotorId Motor_ID)
 {
@@ -732,7 +732,7 @@ void Motor_Off(MotorId Motor_ID)
 }
 
 //****************************************************************
-//µç»úÔÝÍ££¬²»Çå³ýµç»úµÄÔËÐÐ×´Ì¬¼°Ö®Ç°ÊÕµ½µÄ¿ØÖÆÖ¸Áî
+//ï¿½ï¿½ï¿½ï¿½ï¿½Í£ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½×´Ì¬ï¿½ï¿½Ö®Ç°ï¿½Õµï¿½ï¿½Ä¿ï¿½ï¿½ï¿½Ö¸ï¿½ï¿½
 //****************************************************************
 void Motor_Stop(MotorId Motor_ID)
 {
@@ -780,7 +780,7 @@ void Motor_Stop(MotorId Motor_ID)
 }
 
 //****************************************************************
-//µç»úÔËÐÐ£¬»Ö¸´Ö®Ç°Í£Ö¹Ç°µÄ¿ØÖÆ·½Ê½
+//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ð£ï¿½ï¿½Ö¸ï¿½Ö®Ç°Í£Ö¹Ç°ï¿½Ä¿ï¿½ï¿½Æ·ï¿½Ê½
 //****************************************************************
 void Motor_Run(MotorId Motor_ID)
 {
@@ -864,7 +864,7 @@ motor_state iqControl(MotorId Motor_ID, int32_t iqControl)
    Error_Handler();
  }
 
- 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//¶ÁÈ¡½ÓÊÕµ½ÐÅÏ¢
+ 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½Ï¢
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -916,7 +916,7 @@ motor_state speedControl(MotorId Motor_ID, int32_t speedControl)
    Error_Handler();
  }
 
- 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//¶ÁÈ¡½ÓÊÕµ½ÐÅÏ¢
+ 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½Ï¢
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -967,7 +967,7 @@ motor_state Multi_angleControl_1(MotorId Motor_ID, int32_t angleControl)
    Error_Handler();
  }
 
- 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//¶ÁÈ¡½ÓÊÕµ½ÐÅÏ¢
+ 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½Ï¢
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -1015,7 +1015,7 @@ motor_state Multi_angleControl_2(MotorId Motor_ID, uint16_t maxSpeed, int32_t an
    Error_Handler();
  }
 
- 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//¶ÁÈ¡½ÓÊÕµ½ÐÅÏ¢
+ 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½Ï¢
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -1061,7 +1061,7 @@ motor_state Single_loop_angleControl_1(MotorId Motor_ID, uint8_t spinDirection, 
    Error_Handler();
  }
 
- 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//¶ÁÈ¡½ÓÊÕµ½ÐÅÏ¢
+ 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½Ï¢
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -1108,7 +1108,7 @@ motor_state Single_loop_angleControl_2(MotorId Motor_ID, uint8_t spinDirection, 
    Error_Handler();
  }
 
- 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//¶ÁÈ¡½ÓÊÕµ½ÐÅÏ¢
+ 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//ï¿½ï¿½È¡ï¿½ï¿½ï¿½Õµï¿½ï¿½ï¿½Ï¢
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -1148,8 +1148,8 @@ typedef struct
 }motor__control_data;
 
 //================================================================  
-//buf¶¨Òå2+20¸ö×Ö·û£ºÇ°2Î»ÎªID£¬Èç01£¬ºóÃæÎªdata£¬5Î»ÎªÒ»¸ödata£¬¹²4×é
-//Èç£º01 01234 55555 66666 44444 ; 
+//bufï¿½ï¿½ï¿½ï¿½2+20ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½Ç°2Î»ÎªIDï¿½ï¿½ï¿½ï¿½01ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Îªdataï¿½ï¿½5Î»ÎªÒ»ï¿½ï¿½dataï¿½ï¿½ï¿½ï¿½4ï¿½ï¿½
+//ï¿½ç£º01 01234 55555 66666 44444 ; 
 //================================================================  
 void Motor_open_fanction_uart(uint8_t *buf,uint8_t size)
 {
@@ -1174,7 +1174,7 @@ void Motor_open_fanction_uart(uint8_t *buf,uint8_t size)
                 (uart_input.bit.data1[1]-'0')*1000 +\
                 (uart_input.bit.data1[0]-'0')*10000;
 //================================================================  
-//Êµ¼ÊÃ»ÓÐÓÃµ½
+//Êµï¿½ï¿½Ã»ï¿½ï¿½ï¿½Ãµï¿½
   input.data2 = (uart_input.bit.data2[4]-'0')*1 +\
                 (uart_input.bit.data2[3]-'0')*10 +\
                 (uart_input.bit.data2[2]-'0')*100 +\
@@ -1202,17 +1202,37 @@ void Motor_open_fanction_uart(uint8_t *buf,uint8_t size)
     break;
   case 2: //get pid state
  {
-    static motor_pid uart_get_pid
+    static motor_pid uart_get_pid;
     Read_PID(input.data0,&uart_get_pid);
     printf("uart_get_pid.anglePidKi:%d, uart_get_pid.anglePidKp:%d\r\n\
             uart_get_pid.iqPidKi:%d, uart_get_pid.iqPidKp:%d\r\n\
             uart_get_pid.speedPidKi:%d,uart_get_pid.speedPidKp:%d\r\n",\
             uart_get_pid.anglePidKi,uart_get_pid.anglePidKp,\
-            art_get_pid.iqPidKi,uart_get_pid.iqPidKp,\
+            uart_get_pid.iqPidKi,uart_get_pid.iqPidKp,\
             uart_get_pid.speedPidKi,uart_get_pid.speedPidKp);
   }
     break;
-  
+   case 3: //get encoder state
+   {
+    static motor_Encoder uart_get_encoder;
+    Read_Encoder(input.data0,&uart_get_encoder);
+    printf("uart_get_encoder.encoder:%d, uart_get_encoder.encoderRaw:%d\r\n\
+            uart_get_encoder.encoderOffset:%d\r\n",\
+            uart_get_encoder.encoder, uart_get_encoder.encoderRaw, uart_get_encoder.encoderOffset);
+   }
+    break;
+    case 4: //stop the motor
+    {
+      Motor_Stop(input.data0);
+
+    }
+    break;
+    case 5:// position control with max speed
+    {
+      outputstate = Multi_angleControl_2(input.data0, input.data1, input.data2);
+      printf("outputstate.temperature:%d, outputstate.iq:%d, outputstate.speed:%d, outputstate.encoder:%d\r\n",\
+      outputstate.temperature,outputstate.iq,outputstate.speed,outputstate.encoder);
+    }
   default:
     break;
   }                

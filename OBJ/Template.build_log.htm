@@ -3,84 +3,30 @@
 <pre>
 <h1>礦ision Build Log</h1>
 <h2>Tool Versions:</h2>
-IDE-Version: 礦ision V5.31.0.0
-Copyright (C) 2020 ARM Ltd and ARM Germany GmbH. All rights reserved.
-License Information: Yisheng LI, uoit, LIC=----
+IDE-Version: 礦ision V5.23.0.0
+Copyright (C) 2017 ARM Ltd and ARM Germany GmbH. All rights reserved.
+License Information: Kenny Li, Ontario Tech University, LIC=MPPLD-88XDB-KPFZY-ISKK3-XNR06-CJAQ7
  
 Tool Versions:
-Toolchain:       MDK-Lite  Version: 5.31.0.0
-Toolchain Path:  D:\ARM\ARMCC\Bin
-C Compiler:      Armcc.exe V5.06 update 6 (build 750)
-Assembler:       Armasm.exe V5.06 update 6 (build 750)
-Linker/Locator:  ArmLink.exe V5.06 update 6 (build 750)
-Library Manager: ArmAr.exe V5.06 update 6 (build 750)
-Hex Converter:   FromElf.exe V5.06 update 6 (build 750)
-CPU DLL:         SARMCM3.DLL V5.31.0.0
-Dialog DLL:      DCM.DLL V1.17.3.0
-Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V3.0.7.0
-Dialog DLL:      TCM.DLL V1.46.0.0
+Toolchain:       MDK-ARM Plus  Version: 5.23
+Toolchain Path:  C:\Keil_v5\ARM\ARMCC\Bin
+C Compiler:      Armcc.exe V5.06 update 4 (build 422)
+Assembler:       Armasm.exe V5.06 update 4 (build 422)
+Linker/Locator:  ArmLink.exe V5.06 update 4 (build 422)
+Library Manager: ArmAr.exe V5.06 update 4 (build 422)
+Hex Converter:   FromElf.exe V5.06 update 4 (build 422)
+CPU DLL:         SARMCM3.DLL V5.23
+Dialog DLL:      DCM.DLL V1.15.0.0
+Target DLL:      STLink\ST-LINKIII-KEIL_SWO.dll V2.0.18.0
+Dialog DLL:      TCM.DLL V1.27.0.0
  
 <h2>Project:</h2>
-C:\Users\27129\OneDrive\桌面\大疆无刷减速电机3508\MCU_CAN_control\MCU_CAN_control\USER\CAN.uvprojx
-Project File Date:  01/23/2023
+C:\Users\razer\Documents\Manipulator\USER\CAN.uvprojx
+Project File Date:  01/30/2023
 
 <h2>Output:</h2>
-*** Using Compiler 'V5.06 update 6 (build 750)', folder: 'D:\ARM\ARMCC\Bin'
-Rebuild target 'CAN'
-assembling startup_stm32f407xx.s...
-compiling stm32f4xx_hal_msp.c...
-compiling system_stm32f4xx.c...
-compiling stm32f4xx_hal_pwr.c...
-compiling stm32f4xx_it.c...
-compiling main.c...
-..\HARDWARE\CAN\motor_control.h(112): warning:  #1295-D: Deprecated declaration Error_Handler - give arg types
-  void Error_Handler();
-main.c(45): warning:  #223-D: function "memset" declared implicitly
-  	memset(str,0,len);	
-main.c(52): warning:  #223-D: function "memcpy" declared implicitly
-  			memcpy(canbuf,USART_RX_BUF,len);
-main.c(22): warning:  #177-D: variable "key"  was declared but never referenced
-     	u8 key;
-main.c(23): warning:  #177-D: variable "t"  was declared but never referenced
-  	u8 i=0,t=1,j=0;
-main.c(23): warning:  #177-D: variable "j"  was declared but never referenced
-  	u8 i=0,t=1,j=0;
-main.c(26): warning:  #177-D: variable "cnt"  was declared but never referenced
-  	u8 cnt=0;
-main.c(28): warning:  #177-D: variable "canbufchange_ascil"  was declared but never referenced
-  	u16 canbufchange_ascil[100]={0};
-main.c(29): warning:  #177-D: variable "rdata"  was declared but never referenced
-  	u8 rdata;
-main.c(30): warning:  #177-D: variable "res"  was declared but never referenced
-  	u8 res;
-main.c(31): warning:  #177-D: variable "Get_STDid"  was declared but never referenced
-  	u8 Get_STDid;
-main.c(33): warning:  #177-D: variable "getstate"  was declared but never referenced
-  	motor_state getstate;
-main.c: 12 warnings, 0 errors
-compiling stm32f4xx_hal_rcc.c...
-compiling stm32f4xx_hal_cortex.c...
-compiling stm32f4xx_hal_pwr_ex.c...
-compiling stm32f4xx_hal_usart.c...
-compiling stm32f4xx_hal.c...
-compiling stm32f4xx_hal_rcc_ex.c...
-compiling stm32f4xx_hal_gpio.c...
-compiling stm32f4xx_hal_dma.c...
-compiling stm32f4xx_hal_dma_ex.c...
-compiling stm32f4xx_hal_uart.c...
-compiling stm32f4xx_hal_sram.c...
-compiling stm32f4xx_hal_tim_ex.c...
-compiling stm32f4xx_ll_fsmc.c...
-compiling delay.c...
-compiling key.c...
-compiling stm32f4xx_hal_spi.c...
-compiling led.c...
-compiling sys.c...
-compiling usart.c...
-compiling stm32f4xx_hal_tim.c...
-compiling can.c...
-compiling usmart.c...
-compiling stm32f4xx_hal_can.c...
+*** Using Compiler 'V5.06 update 4 (build 422)', folder: 'C:\Keil_v5\ARM\ARMCC\Bin'
+Build target 'CAN'
 compiling motor_control.c...
 ..\HARDWARE\CAN\motor_control.h(112): warning:  #1295-D: Deprecated declaration Error_Handler - give arg types
   void Error_Handler();
@@ -92,9 +38,17 @@ compiling motor_control.c...
   	uint8_t i=0;
 ..\HARDWARE\CAN\motor_control.c(1162): warning:  #223-D: function "memcpy" declared implicitly
     memcpy(uart_input.data,buf,size);
-..\HARDWARE\CAN\motor_control.c(1197): warning:  #188-D: enumerated type mixed with another type
+..\HARDWARE\CAN\motor_control.c(1198): warning:  #188-D: enumerated type mixed with another type
       outputstate = speedControl(input.data0, input.data1);
-..\HARDWARE\CAN\motor_control.c(1206): warning:  #1-D: last line of file ends without a newline
+..\HARDWARE\CAN\motor_control.c(1206): warning:  #188-D: enumerated type mixed with another type
+      Read_PID(input.data0,&uart_get_pid);
+..\HARDWARE\CAN\motor_control.c(1218): warning:  #188-D: enumerated type mixed with another type
+      Read_Encoder(input.data0,&uart_get_encoder);
+..\HARDWARE\CAN\motor_control.c(1226): warning:  #188-D: enumerated type mixed with another type
+        Motor_Stop(input.data0);
+..\HARDWARE\CAN\motor_control.c(1232): warning:  #188-D: enumerated type mixed with another type
+        outputstate = Multi_angleControl_2(input.data0, input.data1, input.data2);
+..\HARDWARE\CAN\motor_control.c(1239): warning:  #1-D: last line of file ends without a newline
   }
 ..\HARDWARE\CAN\motor_control.c(1156): warning:  #177-D: variable "data"  was declared but never referenced
     uint8_t *data,flag;
@@ -104,27 +58,18 @@ compiling motor_control.c...
     uint8_t j=0;
 ..\HARDWARE\CAN\motor_control.c(1158): warning:  #177-D: variable "i"  was declared but never referenced
     uint8_t i=0;
-..\HARDWARE\CAN\motor_control.c: 11 warnings, 0 errors
-compiling usmart_str.c...
-compiling usmart_config.c...
-compiling lcd.c...
+..\HARDWARE\CAN\motor_control.c: 15 warnings, 0 errors
 linking...
-Program Size: Code=25502 RO-data=750 RW-data=340 ZI-data=2172  
+Program Size: Code=26630 RO-data=1050 RW-data=352 ZI-data=2176  
 FromELF: creating hex file...
-"..\OBJ\Template.axf" - 0 Error(s), 23 Warning(s).
-
-<h2>Software Packages used:</h2>
-
-Package Vendor: Keil
-                http://www.keil.com/pack/Keil.STM32F4xx_DFP.2.15.0.pack
-                Keil.STM32F4xx_DFP.2.15.0
-                STMicroelectronics STM32F4 Series Device Support, Drivers and Examples
+"..\OBJ\Template.axf" - 0 Error(s), 15 Warning(s).
 
 <h2>Collection of Component include folders:</h2>
-  C:\Users\27129\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
+  .\RTE\_CAN
+  C:\Users\razer\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.12.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include
 
 <h2>Collection of Component Files used:</h2>
-Build Time Elapsed:  00:00:03
+Build Time Elapsed:  00:00:00
 </pre>
 </body>
 </html>

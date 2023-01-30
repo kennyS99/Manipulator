@@ -4,7 +4,7 @@
 ..\obj\led.o: ..\USER\stm32f4xx.h
 ..\obj\led.o: ..\USER\stm32f407xx.h
 ..\obj\led.o: ..\CORE\core_cm4.h
-..\obj\led.o: D:\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\led.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\obj\led.o: ..\CORE\cmsis_version.h
 ..\obj\led.o: ..\CORE\cmsis_compiler.h
 ..\obj\led.o: ..\CORE\cmsis_armcc.h
@@ -16,7 +16,7 @@
 ..\obj\led.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_def.h
 ..\obj\led.o: ..\USER\stm32f4xx.h
 ..\obj\led.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\Legacy/stm32_hal_legacy.h
-..\obj\led.o: D:\ARM\ARMCC\Bin\..\include\stddef.h
+..\obj\led.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 ..\obj\led.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc_ex.h
 ..\obj\led.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_exti.h
 ..\obj\led.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_gpio.h
