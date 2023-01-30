@@ -48,7 +48,7 @@ int main(void)
        if(USART_RX_STA&0x8000)
 		{					   
 			len=USART_RX_STA&0x3fff;//得到此次接收到的数据长度
-			printf("\r\nyou send message len：%d,data:\r\n",len);
+			printf("\r\nyou send message len:%d,data:\r\n",len);
 			memcpy(canbuf,USART_RX_BUF,len);
 			HAL_UART_Transmit(&UART1_Handler,(uint8_t*)USART_RX_BUF,len,1000);	//发送接收到的数据
 			while(__HAL_UART_GET_FLAG(&UART1_Handler,UART_FLAG_TC)!=SET);		//等待发送结束

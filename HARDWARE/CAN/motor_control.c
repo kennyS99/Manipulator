@@ -1200,6 +1200,18 @@ void Motor_open_fanction_uart(uint8_t *buf,uint8_t size)
             outputstate.temperature,outputstate.iq,outputstate.speed,outputstate.encoder);
   }
     break;
+  case 2: //get pid state
+ {
+    static motor_pid uart_get_pid
+    Read_PID(input.data0,&uart_get_pid);
+    printf("uart_get_pid.anglePidKi:%d, uart_get_pid.anglePidKp:%d\r\n\
+            uart_get_pid.iqPidKi:%d, uart_get_pid.iqPidKp:%d\r\n\
+            uart_get_pid.speedPidKi:%d,uart_get_pid.speedPidKp:%d\r\n",\
+            uart_get_pid.anglePidKi,uart_get_pid.anglePidKp,\
+            art_get_pid.iqPidKi,uart_get_pid.iqPidKp,\
+            uart_get_pid.speedPidKi,uart_get_pid.speedPidKp);
+  }
+    break;
   
   default:
     break;
