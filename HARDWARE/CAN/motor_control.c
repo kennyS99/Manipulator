@@ -1180,7 +1180,7 @@ void Motor_open_fanction_uart(uint8_t *buf,uint8_t size)
                 (uart_input.bit.data1[1]-'0')*1000 +\
                 (uart_input.bit.data1[0]-'0')*10000;
 //================================================================  
-//ʵ��û���õ�
+
   input.data2 = (uart_input.bit.data2[4]-'0')*1 +\
                 (uart_input.bit.data2[3]-'0')*10 +\
                 (uart_input.bit.data2[2]-'0')*100 +\
