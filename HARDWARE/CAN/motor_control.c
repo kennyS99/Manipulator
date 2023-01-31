@@ -22,9 +22,9 @@ void Error_Handler(void)
 
 uint8_t Checksumcrc(uint8_t *aData, uint8_t StartIndex, uint8_t DataLength);
 
-//buf:���ݻ�����;	 
-//����ֵ:0,�����ݱ��յ�;
-//		 ����,���յ����ݳ���;
+//buf: data buffer area; 
+//Return value: 0, no data is received;
+// Others, received data length;
 static u8 CAN1_Receive_Msg(u8 *std, u8 *buf)
 {
  	u32 i;
@@ -94,7 +94,7 @@ void Read_PID(MotorId Motor_ID,motor_pid* pid)
 	*pid = getpid;
 }
 //****************************************************************
-//����д��RAM���ϵ�����ʧЧ
+//Write PID value into RAM, and the parameters become invalid after power off
 //****************************************************************
 void Write_PID_to_RAM(MotorId Motor_ID,motor_pid pid)
 {
@@ -142,7 +142,7 @@ void Write_PID_to_RAM(MotorId Motor_ID,motor_pid pid)
 	}	
 }
 //****************************************************************
-//����д��ROM���ϵ�������Ȼ��Ч
+//write PID value to ROM, valid after power off
 //**************************************************************** 
 void Write_PID_to_ROM(MotorId Motor_ID,motor_pid pid)
 {
@@ -190,7 +190,7 @@ void Write_PID_to_ROM(MotorId Motor_ID,motor_pid pid)
 }
 
 //****************************************************************
-//��ȡ��ǰ����ļ��ٶȲ���?
+//Read the acceleration parameters of the current motor
 //**************************************************************** 
 void Read_Accel(MotorId Motor_ID,int32_t* Accel)
 {
@@ -229,12 +229,12 @@ void Read_Accel(MotorId Motor_ID,int32_t* Accel)
 		}
 		printf("\r\n");
 	}
-//���ٶ�ռ4�ֽڣ�4-7data����λ��ǰ
+//Acceleration occupies 4 bytes, 4-7data, low order first
 	*Accel = (RxData[7]<<(4*3))|(RxData[6]<<(4*2))|(RxData[5]<<(4*1))|(RxData[4]<<(4*0));
 }
 
 //****************************************************************
-//д�����ļ��ٶȲ������ϵ���?Ч
+//Write acceleration value into RAM, and the parameters become invalid after power off
 //**************************************************************** 
 void Write_Accel_to_RAM(MotorId Motor_ID,int32_t Accel)
 {
@@ -253,7 +253,7 @@ void Write_Accel_to_RAM(MotorId Motor_ID,int32_t Accel)
   TxData[1] = 0;
   TxData[2] = 0;
   TxData[3] = 0;
-  TxData[4] = (uint8_t)((Accel&0x000F)>>0);//�ֱ���?Accelÿ���ֽڵ�����
+  TxData[4] = (uint8_t)((Accel&0x000F)>>0);//�ֱ���?Accelÿ���ֽڵ�����
   TxData[5] = (uint8_t)((Accel&0x00F0)>>4);
   TxData[6] = (uint8_t)((Accel&0x0F00)>>8);
   TxData[7] = (uint8_t)((Accel&0xF000)>>12);
@@ -282,7 +282,7 @@ void Write_Accel_to_RAM(MotorId Motor_ID,int32_t Accel)
 }
 
 //****************************************************************
-//��ȡ����ļ��ٶȲ���?
+//Read the acceleration parameters of the motor
 //**************************************************************** 
 void Read_Encoder(MotorId Motor_ID,motor_Encoder* Encoder)
 {
@@ -313,7 +313,7 @@ void Read_Encoder(MotorId Motor_ID,motor_Encoder* Encoder)
 	 Error_Handler();
  }
  
-	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//��ȡ���յ���Ϣ
+	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//read received information
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -330,7 +330,7 @@ void Read_Encoder(MotorId Motor_ID,motor_Encoder* Encoder)
 }
 
 //****************************************************************
-//д�����������λ�?��
+//write expected encoder value to ROM as motor zero Position
 //****************************************************************
 void Write_Expect_Encoder_to_ROM(MotorId Motor_ID,motor_Encoder Encoder)
 {
@@ -377,7 +377,8 @@ void Write_Expect_Encoder_to_ROM(MotorId Motor_ID,motor_Encoder Encoder)
 	}	  
 }
 //****************************************************************
-//д�뵱ǰ������λ����Ϊ��ʼλ��д��ROM���������?���������ϵ���Ч
+//write current position value to ROM as motor zero Position
+//This command needs to restart the motor to take effect
 //****************************************************************
 void Write_Current_Encoder_to_ROM(MotorId Motor_ID,motor_Encoder *Encoder)
 {
@@ -408,7 +409,7 @@ void Write_Current_Encoder_to_ROM(MotorId Motor_ID,motor_Encoder *Encoder)
 	 Error_Handler();
  }
  
-	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//��ȡ���յ���Ϣ
+	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)////read received information
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -421,7 +422,9 @@ void Write_Current_Encoder_to_ROM(MotorId Motor_ID,motor_Encoder *Encoder)
 	*Encoder = getEncoder;  
 }
 //****************************************************************
-//��ȡ��ǰ�����Ȧ���ԽǶ�ֵ�����?0.01��/LSB����ֵ˳ʱ���ۼƽǶȣ���ֵ��ʱ���ۼƽǶ�
+/*Read the absolute angle value of the current multi-turn motor, the unit is 0.01°/LSB, 
+the positive value accumulates the angle clockwise, 
+and the negative value accumulates the angle counterclockwise*/
 //****************************************************************
 void Read_MotorAngle(MotorId Motor_ID,int64_t* angle)
 {
@@ -451,7 +454,7 @@ void Read_MotorAngle(MotorId Motor_ID,int64_t* angle)
 	 Error_Handler();
  }
  
-	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//��ȡ���յ���Ϣ
+	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//read received information
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -460,12 +463,13 @@ void Read_MotorAngle(MotorId Motor_ID,int64_t* angle)
 		}
 		printf("\r\n");
 	}
-//�Ƕ�ռ6�ֽڣ�2-7data����λ��ǰ
+//Angle occupies 6 bytes, 2-7data, low order first
 	*angle = (RxData[4]<<(4*3))|(RxData[3]<<(4*2))|(RxData[2]<<(4*1))|(RxData[1]<<(4*0)) \
             |(RxData[7]<<(4*6))|(RxData[6]<<(4*5))|(RxData[5]<<(4*4));
 }
 //****************************************************************
-//��ȡ��ǰ�����Ȧ�Ƕ�ֵ�����?0.01��/LSB������������?���?˳ʱ������
+/*Read the current motor single-turn angle value, the unit is 0.01°/LSB, 
+the encoder zero is the starting point, and it increases clockwise*/
 //****************************************************************
 void Read_CircleAngle(MotorId Motor_ID,uint16_t* angle)
 {
@@ -495,7 +499,7 @@ void Read_CircleAngle(MotorId Motor_ID,uint16_t* angle)
 	 Error_Handler();
  }
  
-	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//��ȡ���յ���Ϣ
+	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//read received information
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -508,7 +512,7 @@ void Read_CircleAngle(MotorId Motor_ID,uint16_t* angle)
 }
 
 //****************************************************************
-//��ȡ��ǰ������¶ȣ���ѹ�ʹ���״�?λ
+//Read current motor temperature, voltage and error status bits
 //****************************************************************
 void Read_MotorState1(MotorId Motor_ID,motor_state* state)
 {
@@ -539,7 +543,7 @@ void Read_MotorState1(MotorId Motor_ID,motor_state* state)
 	 Error_Handler();
  }
  
-	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//��ȡ���յ���Ϣ
+	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//read received information
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -556,7 +560,7 @@ void Read_MotorState1(MotorId Motor_ID,motor_state* state)
 }
 
 //****************************************************************
-//��ȡ��ǰ������¶ȣ��?�ص���Iq��ת�٣�������λ��
+//Read the current motor temperature, torque current Iq, speed, encoder position
 //****************************************************************
 void Read_MotorState2(MotorId Motor_ID,motor_state* state)
 {
@@ -587,7 +591,7 @@ void Read_MotorState2(MotorId Motor_ID,motor_state* state)
 	 Error_Handler();
  }
  
-	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//��ȡ���յ���Ϣ
+	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//read received information
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -604,7 +608,7 @@ void Read_MotorState2(MotorId Motor_ID,motor_state* state)
 }
 
 //****************************************************************
-//��ȡ��ǰ������¶ȣ�ABC�����?
+//Read the current motor temperature, ABC phase current
 //****************************************************************
 void Read_MotorState3(MotorId Motor_ID,motor_state* state)
 {
@@ -635,7 +639,7 @@ void Read_MotorState3(MotorId Motor_ID,motor_state* state)
 	 Error_Handler();
  }
  
-	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//��ȡ���յ���Ϣ
+	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//read received information
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -652,7 +656,7 @@ void Read_MotorState3(MotorId Motor_ID,motor_state* state)
 }
 
 //****************************************************************
-//�������Ĵ���״̬������յ��󷵻�?
+//Clear the error status of the motor, and return after the motor receives
 //****************************************************************
 void Clear_errorState(MotorId Motor_ID)
 {
@@ -684,7 +688,7 @@ void Clear_errorState(MotorId Motor_ID)
 }
 
 //****************************************************************
-//�رյ�����������ָ��
+//Turn off the motor, clear the control command
 //****************************************************************
 void Motor_Off(MotorId Motor_ID)
 {
@@ -732,7 +736,8 @@ void Motor_Off(MotorId Motor_ID)
 }
 
 //****************************************************************
-//�����ͣ����������������״�?��֮ǰ�յ��Ŀ���ָ��
+/*The motor is paused, and the running state of the motor and the 
+control commands received before are not cleared*/
 //****************************************************************
 void Motor_Stop(MotorId Motor_ID)
 {
@@ -780,7 +785,7 @@ void Motor_Stop(MotorId Motor_ID)
 }
 
 //****************************************************************
-//������У��ָ��?ǰֹͣǰ�Ŀ��Ʒ�ʽ
+//The motor runs and resumes the control mode before stopping
 //****************************************************************
 void Motor_Run(MotorId Motor_ID)
 {
@@ -864,7 +869,7 @@ motor_state iqControl(MotorId Motor_ID, int32_t iqControl)
    Error_Handler();
  }
 
- 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//��ȡ���յ���Ϣ
+ 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//read received information
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -916,7 +921,7 @@ motor_state speedControl(MotorId Motor_ID, int32_t speedControl)
    Error_Handler();
  }
 
- 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//��ȡ���յ���Ϣ
+ 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//read received information
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -935,7 +940,7 @@ motor_state speedControl(MotorId Motor_ID, int32_t speedControl)
 /**
   * @brief  send a angle control frame via CAN bus
   * @param  motor ID ,1-32
-  * @param  the actual position is 0.01degree/LSB, 36000 represents 360Â°
+  * @param  the actual position is 0.01degree/LSB, 36000 represents 360°
   * @retval null
   */
 motor_state Multi_angleControl_1(MotorId Motor_ID, int32_t angleControl)
@@ -967,7 +972,7 @@ motor_state Multi_angleControl_1(MotorId Motor_ID, int32_t angleControl)
    Error_Handler();
  }
 
- 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//��ȡ���յ���Ϣ
+ 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//read received information
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -1015,7 +1020,7 @@ motor_state Multi_angleControl_2(MotorId Motor_ID, uint16_t maxSpeed, int32_t an
    Error_Handler();
  }
 
- 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//��ȡ���յ���Ϣ
+ 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//read received information
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -1061,7 +1066,7 @@ motor_state Single_loop_angleControl_1(MotorId Motor_ID, uint8_t spinDirection, 
    Error_Handler();
  }
 
- 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//��ȡ���յ���Ϣ
+ 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//read received information
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -1108,7 +1113,7 @@ motor_state Single_loop_angleControl_2(MotorId Motor_ID, uint8_t spinDirection, 
    Error_Handler();
  }
 
- 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//��ȡ���յ���Ϣ
+ 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//read received information
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
 		for(i=0;i<8;i++)
@@ -1148,8 +1153,9 @@ typedef struct
 }motor__control_data;
 
 //================================================================  
-//buf����2+20���ַ���ǰ2λΪID����01������Ϊdata��5λΪһ��data����4��
-//�磺01 01234 55555 66666 44444 ; 
+/*buf defines 2+20 characters: the first 2 digits are ID, such as 01, the latter is data, 
+and 5 digits are a data, a total of 4 groups*/
+//Example: 01 01234 55555 66666 44444 ; 
 //================================================================  
 void Motor_open_fanction_uart(uint8_t *buf,uint8_t size)
 {

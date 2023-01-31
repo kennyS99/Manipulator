@@ -8,12 +8,11 @@
 #include "can.h"
 #include "motor_control.h"
 /************************************************
-使用说明：
-CAN1连接电机，打开串口，观察是否有打印输出，波特率为115200
+User manual：
+CAN1 connet to the motor, open serial port, take a look if there is any message print out,Serial port baud rate 115200
 
-电机控制输入指令：下述指令为01命令，电机0，data=2000，
+motor control command: below is a example for motor speed contro,data=2000，
 01000010200000000000*/
-//串口输入上述指令后，mcu返回相应指令，并打印返回值
 
 /*************************************************/
 
