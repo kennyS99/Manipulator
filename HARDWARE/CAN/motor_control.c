@@ -1138,7 +1138,7 @@ typedef union
     uint8_t ID[2];
     uint8_t data0[5];
     uint8_t data1[5];
-    uint8_t data2[5];
+    uint8_t data2[6];
     uint8_t data3[5];
   }bit; 
 }motor_uart_control;
@@ -1146,10 +1146,10 @@ typedef union
 typedef struct
 {
   uint16_t ID;
-  uint64_t data0;
-  uint64_t data1;
-  uint64_t data2;
-  uint64_t data3;
+  int64_t data0;
+  int64_t data1;
+  int64_t data2;
+  int64_t data3;
 }motor__control_data;
 
 //================================================================  
@@ -1181,12 +1181,18 @@ void Motor_open_fanction_uart(uint8_t *buf,uint8_t size)
                 (uart_input.bit.data1[0]-'0')*10000;
 //================================================================  
 
-  input.data2 = (uart_input.bit.data2[4]-'0')*1 +\
-                (uart_input.bit.data2[3]-'0')*10 +\
-                (uart_input.bit.data2[2]-'0')*100 +\
-                (uart_input.bit.data2[1]-'0')*1000 +\
-                (uart_input.bit.data2[0]-'0')*10000;
-
+  input.data2 = (uart_input.bit.data2[5]-'0')*1 +\
+                (uart_input.bit.data2[4]-'0')*10 +\
+                (uart_input.bit.data2[3]-'0')*100 +\
+                (uart_input.bit.data2[2]-'0')*1000 +\
+                (uart_input.bit.data2[1]-'0')*10000;
+  if (uart_input.bit.data2[0] - '0')
+  {
+    input.data2 = 0 - input.data2;
+  }else{
+    input.data2 = 0 + input.data2;
+  }
+  
   input.data3=  (uart_input.bit.data3[4]-'0')*1 +\
                 (uart_input.bit.data3[3]-'0')*10 +\
                 (uart_input.bit.data3[2]-'0')*100 +\
@@ -1230,10 +1236,9 @@ void Motor_open_fanction_uart(uint8_t *buf,uint8_t size)
     case 4: //stop the motor
     {
       Motor_Stop(input.data0);
-
     }
     break;
-    case 5:// position control with max speed
+    case 5:// position control with set speed
     {
       outputstate = Multi_angleControl_2(input.data0, input.data1, input.data2);
       printf("outputstate.temperature:%d, outputstate.iq:%d, outputstate.speed:%d, outputstate.encoder:%d\r\n",\

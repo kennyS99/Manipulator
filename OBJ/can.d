@@ -4,7 +4,7 @@
 ..\obj\can.o: ..\USER\stm32f4xx.h
 ..\obj\can.o: ..\USER\stm32f407xx.h
 ..\obj\can.o: ..\CORE\core_cm4.h
-..\obj\can.o: D:\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\can.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
 ..\obj\can.o: ..\CORE\cmsis_version.h
 ..\obj\can.o: ..\CORE\cmsis_compiler.h
 ..\obj\can.o: ..\CORE\cmsis_armcc.h
@@ -16,7 +16,7 @@
 ..\obj\can.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_def.h
 ..\obj\can.o: ..\USER\stm32f4xx.h
 ..\obj\can.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\Legacy/stm32_hal_legacy.h
-..\obj\can.o: D:\ARM\ARMCC\Bin\..\include\stddef.h
+..\obj\can.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
 ..\obj\can.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc_ex.h
 ..\obj\can.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_exti.h
 ..\obj\can.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_gpio.h
@@ -67,6 +67,6 @@
 ..\obj\can.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h
 ..\obj\can.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_hcd.h
 ..\obj\can.o: ..\SYSTEM\usart\usart.h
-..\obj\can.o: D:\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\can.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
 ..\obj\can.o: ..\SYSTEM\delay\delay.h
 ..\obj\can.o: ..\HARDWARE\LED\led.h
