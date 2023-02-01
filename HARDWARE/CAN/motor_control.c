@@ -230,7 +230,7 @@ void Read_Accel(MotorId Motor_ID,int32_t* Accel)
 		printf("\r\n");
 	}
 //Acceleration occupies 4 bytes, 4-7data, low order first
-	*Accel = (RxData[7]<<(4*3))|(RxData[6]<<(4*2))|(RxData[5]<<(4*1))|(RxData[4]<<(4*0));
+	*Accel = (RxData[7]<<(8*3))|(RxData[6]<<(8*2))|(RxData[5]<<(8*1))|(RxData[4]<<(8*0));
 }
 
 //****************************************************************
@@ -253,10 +253,10 @@ void Write_Accel_to_RAM(MotorId Motor_ID,int32_t Accel)
   TxData[1] = 0;
   TxData[2] = 0;
   TxData[3] = 0;
-  TxData[4] = (uint8_t)((Accel&0x000F)>>0);//�ֱ���?Accelÿ���ֽڵ�����
-  TxData[5] = (uint8_t)((Accel&0x00F0)>>4);
-  TxData[6] = (uint8_t)((Accel&0x0F00)>>8);
-  TxData[7] = (uint8_t)((Accel&0xF000)>>12);
+  TxData[4] = (uint8_t)((Accel&0x000000FF)>>0);//�ֱ���?Accelÿ���ֽڵ�����
+  TxData[5] = (uint8_t)((Accel&0x0000FF00)>>8);
+  TxData[6] = (uint8_t)((Accel&0x00FF0000)>>16);
+  TxData[7] = (uint8_t)((Accel&0xFF000000)>>24);
        
  if (HAL_CAN_AddTxMessage(&hcan1, &TxHeader, TxData, &TxMailbox) != HAL_OK)
  {
@@ -322,9 +322,9 @@ void Read_Encoder(MotorId Motor_ID,motor_Encoder* Encoder)
 		}
 		printf("\r\n");
 	}
-	getEncoder.encoder = (RxData[3]>>4)|RxData[2];
-	getEncoder.encoderRaw =(RxData[5]>>4)|RxData[4];
-	getEncoder.encoderOffset = (RxData[7]>>4)|RxData[6];
+	getEncoder.encoder = (RxData[3]<<8)|RxData[2];
+	getEncoder.encoderRaw =(RxData[5]<<8)|RxData[4];
+	getEncoder.encoderOffset = (RxData[7]<<8)|RxData[6];
 
 	*Encoder = getEncoder;
 }
@@ -351,8 +351,8 @@ void Write_Expect_Encoder_to_ROM(MotorId Motor_ID,motor_Encoder Encoder)
   TxData[3] = 0;
   TxData[4] = 0;
   TxData[5] = 0;
-  TxData[6] = (uint8_t)((Encoder.encoderOffset&0x0F)>>0);
-  TxData[7] = (uint8_t)((Encoder.encoderOffset&0xF0)>>4);
+  TxData[6] = (uint8_t)((Encoder.encoderOffset&0x00FF)>>0);
+  TxData[7] = (uint8_t)((Encoder.encoderOffset&0xFFFF)>>8);
        
  if (HAL_CAN_AddTxMessage(&hcan1, &TxHeader, TxData, &TxMailbox) != HAL_OK)
  {
@@ -418,7 +418,7 @@ void Write_Current_Encoder_to_ROM(MotorId Motor_ID,motor_Encoder *Encoder)
 		}
 		printf("\r\n");
 	}
-	getEncoder.encoderOffset = (RxData[7]>>4)|RxData[6];
+	getEncoder.encoderOffset = (RxData[7]<<8)|RxData[6];
 	*Encoder = getEncoder;  
 }
 //****************************************************************
@@ -464,8 +464,8 @@ void Read_MotorAngle(MotorId Motor_ID,int64_t* angle)
 		printf("\r\n");
 	}
 //Angle occupies 6 bytes, 2-7data, low order first
-	*angle = (RxData[4]<<(4*3))|(RxData[3]<<(4*2))|(RxData[2]<<(4*1))|(RxData[1]<<(4*0)) \
-            |(RxData[7]<<(4*6))|(RxData[6]<<(4*5))|(RxData[5]<<(4*4));
+	*angle = (RxData[4]<<(8*3))|(RxData[3]<<(8*2))|(RxData[2]<<(8*1))|(RxData[1]<<(8*0)) \
+            |(RxData[7]<<(8*6))|(RxData[6]<<(8*5))|(RxData[5]<<(8*4));
 }
 //****************************************************************
 /*Read the current motor single-turn angle value, the unit is 0.01°/LSB, 
@@ -508,7 +508,7 @@ void Read_CircleAngle(MotorId Motor_ID,uint16_t* angle)
 		}
 		printf("\r\n");
 	}
-	*angle = (RxData[7]<<(4*1))|(RxData[6]<<(4*0));
+	*angle = (RxData[7]<<(8*1))|(RxData[6]<<(8*0));
 }
 
 //****************************************************************
@@ -553,7 +553,7 @@ void Read_MotorState1(MotorId Motor_ID,motor_state* state)
 		printf("\r\n");
 	}
   getstate.temperature = RxData[1];
-  getstate.voltage = (RxData[4]>>4)|RxData[3];
+  getstate.voltage = (RxData[4]<<8)|RxData[3];
   getstate.errorState = RxData[7];
 
 	*state = getstate;
@@ -601,9 +601,9 @@ void Read_MotorState2(MotorId Motor_ID,motor_state* state)
 		printf("\r\n");
 	}
   getstate.temperature = RxData[1];
-  getstate.iq = (RxData[3]>>4)|RxData[2];
-  getstate.speed = (RxData[5]>>4)|RxData[4];
-  getstate.encoder = (RxData[7]>>4)|RxData[6];
+  getstate.iq = (RxData[3]<<8)|RxData[2];
+  getstate.speed = (RxData[5]<<8)|RxData[4];
+  getstate.encoder = (RxData[7]<<8)|RxData[6];
 	*state = getstate;
 }
 
@@ -649,9 +649,9 @@ void Read_MotorState3(MotorId Motor_ID,motor_state* state)
 		printf("\r\n");
 	}
   getstate.temperature = RxData[1];
-  getstate.phaseA_current = (RxData[3]>>4)|RxData[2];
-  getstate.phaseB_current = (RxData[5]>>4)|RxData[4];
-  getstate.phaseC_current = (RxData[7]>>4)|RxData[6];
+  getstate.phaseA_current = (RxData[3]<<8)|RxData[2];
+  getstate.phaseB_current = (RxData[5]<<8)|RxData[4];
+  getstate.phaseC_current = (RxData[7]<<8)|RxData[6];
 	*state = getstate;
 }
 
@@ -858,10 +858,10 @@ motor_state iqControl(MotorId Motor_ID, int32_t iqControl)
   TxData[1] = 0;
   TxData[2] = 0;
   TxData[3] = 0;
-  TxData[4] = (uint8_t)((iqControl&0x000F)>>0); 
-  TxData[5] = (uint8_t)((iqControl&0x00FF)>>4);
-  TxData[6] = (uint8_t)((iqControl&0x0FFF)>>8);
-  TxData[7] = (uint8_t)((iqControl&0xFFFF)>>12);
+  TxData[4] = (uint8_t)((iqControl&0x000000FF)>>0); 
+  TxData[5] = (uint8_t)((iqControl&0x0000FFFF)>>8);
+  TxData[6] = (uint8_t)((iqControl&0x00FFFFFF)>>16);
+  TxData[7] = (uint8_t)((iqControl&0xFFFFFFFF)>>24);
         
  if (HAL_CAN_AddTxMessage(&hcan1, &TxHeader, TxData, &TxMailbox) != HAL_OK)
  {
@@ -879,9 +879,9 @@ motor_state iqControl(MotorId Motor_ID, int32_t iqControl)
 		printf("\r\n");
 	}
   getstate.temperature = RxData[1];
-  getstate.iq = (RxData[3]>>4)|RxData[2];
-  getstate.speed = (RxData[5]>>4)|RxData[4];
-  getstate.encoder = (RxData[7]>>4)|RxData[6];
+  getstate.iq = (RxData[3]<<8)|RxData[2];
+  getstate.speed = (RxData[5]<<8)|RxData[4];
+  getstate.encoder = (RxData[7]<<8)|RxData[6];
 	return  getstate;
 
 }
@@ -910,10 +910,10 @@ motor_state speedControl(MotorId Motor_ID, int32_t speedControl)
   TxData[1] = 0;
   TxData[2] = 0;
   TxData[3] = 0;
-  TxData[4] = (uint8_t)((speedControl&0x000F)>>0); 
-  TxData[5] = (uint8_t)((speedControl&0x00FF)>>4);
-  TxData[6] = (uint8_t)((speedControl&0x0FFF)>>8);
-  TxData[7] = (uint8_t)((speedControl&0xFFFF)>>12);
+  TxData[4] = (uint8_t)((speedControl&0x000000FF)>>0); 
+  TxData[5] = (uint8_t)((speedControl&0x0000FFFF)>>8);
+  TxData[6] = (uint8_t)((speedControl&0x00FFFFFF)>>16);
+  TxData[7] = (uint8_t)((speedControl&0xFFFFFFFF)>>24);
         
  if (HAL_CAN_AddTxMessage(&hcan1, &TxHeader, TxData, &TxMailbox) != HAL_OK)
  {
@@ -931,9 +931,9 @@ motor_state speedControl(MotorId Motor_ID, int32_t speedControl)
 		printf("\r\n");
 	}
   getstate.temperature = RxData[1];
-  getstate.iq = (RxData[3]>>4)|RxData[2];
-  getstate.speed = (RxData[5]>>4)|RxData[4];
-  getstate.encoder = (RxData[7]>>4)|RxData[6];
+  getstate.iq = (RxData[3]<<8)|RxData[2];
+  getstate.speed = (RxData[5]<<8)|RxData[4];
+  getstate.encoder = (RxData[7]<<8)|RxData[6];
 	return  getstate;
 }
 
@@ -961,10 +961,10 @@ motor_state Multi_angleControl_1(MotorId Motor_ID, int32_t angleControl)
   TxData[1] = 0;
   TxData[2] = 0;
   TxData[3] = 0;
-  TxData[4] = (uint8_t)((angleControl&0x000F)>>0); 
-  TxData[5] = (uint8_t)((angleControl&0x00FF)>>4);
-  TxData[6] = (uint8_t)((angleControl&0x0FFF)>>8);
-  TxData[7] = (uint8_t)((angleControl&0xFFFF)>>12);
+  TxData[4] = (uint8_t)((angleControl&0x000000FF)>>0); 
+  TxData[5] = (uint8_t)((angleControl&0x0000FFFF)>>8);
+  TxData[6] = (uint8_t)((angleControl&0x00FFFFFF)>>16);
+  TxData[7] = (uint8_t)((angleControl&0xFFFFFFFF)>>24);
         
  if (HAL_CAN_AddTxMessage(&hcan1, &TxHeader, TxData, &TxMailbox) != HAL_OK)
  {
@@ -982,9 +982,9 @@ motor_state Multi_angleControl_1(MotorId Motor_ID, int32_t angleControl)
 		printf("\r\n");
 	}
   getstate.temperature = RxData[1];
-  getstate.iq = (RxData[3]>>4)|RxData[2];
-  getstate.speed = (RxData[5]>>4)|RxData[4];
-  getstate.encoder = (RxData[7]>>4)|RxData[6];
+  getstate.iq = (RxData[3]<<8)|RxData[2];
+  getstate.speed = (RxData[5]<<8)|RxData[4];
+  getstate.encoder = (RxData[7]<<8)|RxData[6];
 	return  getstate;
 
 }
@@ -1007,12 +1007,12 @@ motor_state Multi_angleControl_2(MotorId Motor_ID, uint16_t maxSpeed, int32_t an
     
   TxData[0] = 0xA4;
   TxData[1] = 0;
-  TxData[2] = (uint8_t)((maxSpeed&0x0F)>>0);
-  TxData[3] = (uint8_t)((maxSpeed&0xFF)>>4);
-  TxData[4] = (uint8_t)((angleControl&0x000F)>>0); 
-  TxData[5] = (uint8_t)((angleControl&0x00FF)>>4);
-  TxData[6] = (uint8_t)((angleControl&0x0FFF)>>8);
-  TxData[7] = (uint8_t)((angleControl&0xFFFF)>>12);
+  TxData[2] = (uint8_t)((maxSpeed&0x00FF)>>0);
+  TxData[3] = (uint8_t)((maxSpeed&0xFFFF)>>8);
+  TxData[4] = (uint8_t)((angleControl&0x000000FF)>>0); 
+  TxData[5] = (uint8_t)((angleControl&0x0000FFFF)>>8);
+  TxData[6] = (uint8_t)((angleControl&0x00FFFFFF)>>16);
+  TxData[7] = (uint8_t)((angleControl&0xFFFFFFFF)>>24);
         
  if (HAL_CAN_AddTxMessage(&hcan1, &TxHeader, TxData, &TxMailbox) != HAL_OK)
  {
@@ -1030,9 +1030,9 @@ motor_state Multi_angleControl_2(MotorId Motor_ID, uint16_t maxSpeed, int32_t an
 		printf("\r\n");
 	}
   getstate.temperature = RxData[1];
-  getstate.iq = (RxData[3]>>4)|RxData[2];
-  getstate.speed = (RxData[5]>>4)|RxData[4];
-  getstate.encoder = (RxData[7]>>4)|RxData[6];
+  getstate.iq = (RxData[3]<<8)|RxData[2];
+  getstate.speed = (RxData[5]<<8)|RxData[4];
+  getstate.encoder = (RxData[7]<<8)|RxData[6];
 	return  getstate;
 
 }
@@ -1055,8 +1055,8 @@ motor_state Single_loop_angleControl_1(MotorId Motor_ID, uint8_t spinDirection, 
   TxData[1] = spinDirection;
   TxData[2] = 0;
   TxData[3] = 0;
-  TxData[4] = (uint8_t)((angleControl&0x000F)>>0); 
-  TxData[5] = (uint8_t)((angleControl&0x00FF)>>4);
+  TxData[4] = (uint8_t)((angleControl&0x00FF)>>0); 
+  TxData[5] = (uint8_t)((angleControl&0xFFFF)>>8);
   TxData[6] = 0;
   TxData[7] = 0;
         
@@ -1076,9 +1076,9 @@ motor_state Single_loop_angleControl_1(MotorId Motor_ID, uint8_t spinDirection, 
 		printf("\r\n");
 	}
   getstate.temperature = RxData[1];
-  getstate.iq = (RxData[3]>>4)|RxData[2];
-  getstate.speed = (RxData[5]>>4)|RxData[4];
-  getstate.encoder = (RxData[7]>>4)|RxData[6];
+  getstate.iq = (RxData[3]<<8)|RxData[2];
+  getstate.speed = (RxData[5]<<8)|RxData[4];
+  getstate.encoder = (RxData[7]<<8)|RxData[6];
 	return  getstate;
 
 }
@@ -1100,10 +1100,10 @@ motor_state Single_loop_angleControl_2(MotorId Motor_ID, uint8_t spinDirection, 
     
   TxData[0] = 0xA6;
   TxData[1] = spinDirection;
-  TxData[2] = (uint8_t)((maxSpeed&0x000F)>>0); ;
-  TxData[3] = (uint8_t)((maxSpeed&0x000F)>>0); ;
-  TxData[4] = (uint8_t)((angleControl&0x000F)>>0); 
-  TxData[5] = (uint8_t)((angleControl&0x00FF)>>4);
+  TxData[2] = (uint8_t)((maxSpeed&0x00FF)>>0);
+  TxData[3] = (uint8_t)((maxSpeed&0xFFFF)>>8);
+  TxData[4] = (uint8_t)((angleControl&0x00FF)>>0); 
+  TxData[5] = (uint8_t)((angleControl&0xFFFF)>>8);
   TxData[6] = 0;
   TxData[7] = 0;
         
@@ -1123,9 +1123,9 @@ motor_state Single_loop_angleControl_2(MotorId Motor_ID, uint8_t spinDirection, 
 		printf("\r\n");
 	}
   getstate.temperature = RxData[1];
-  getstate.iq = (RxData[3]>>4)|RxData[2];
-  getstate.speed = (RxData[5]>>4)|RxData[4];
-  getstate.encoder = (RxData[7]>>4)|RxData[6];
+  getstate.iq = (RxData[3]<<8)|RxData[2];
+  getstate.speed = (RxData[5]<<8)|RxData[4];
+  getstate.encoder = (RxData[7]<<8)|RxData[6];
 	return  getstate;
 
 }

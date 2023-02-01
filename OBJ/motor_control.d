@@ -4,7 +4,7 @@
 ..\obj\motor_control.o: ..\USER\stm32f4xx.h
 ..\obj\motor_control.o: ..\USER\stm32f407xx.h
 ..\obj\motor_control.o: ..\CORE\core_cm4.h
-..\obj\motor_control.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\motor_control.o: D:\ARM\ARMCC\Bin\..\include\stdint.h
 ..\obj\motor_control.o: ..\CORE\cmsis_version.h
 ..\obj\motor_control.o: ..\CORE\cmsis_compiler.h
 ..\obj\motor_control.o: ..\CORE\cmsis_armcc.h
@@ -16,7 +16,7 @@
 ..\obj\motor_control.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_def.h
 ..\obj\motor_control.o: ..\USER\stm32f4xx.h
 ..\obj\motor_control.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\Legacy/stm32_hal_legacy.h
-..\obj\motor_control.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+..\obj\motor_control.o: D:\ARM\ARMCC\Bin\..\include\stddef.h
 ..\obj\motor_control.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc_ex.h
 ..\obj\motor_control.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_exti.h
 ..\obj\motor_control.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_gpio.h
@@ -67,7 +67,7 @@
 ..\obj\motor_control.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h
 ..\obj\motor_control.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_hcd.h
 ..\obj\motor_control.o: ..\SYSTEM\usart\usart.h
-..\obj\motor_control.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdio.h
+..\obj\motor_control.o: D:\ARM\ARMCC\Bin\..\include\stdio.h
 ..\obj\motor_control.o: ..\SYSTEM\delay\delay.h
 ..\obj\motor_control.o: ..\HARDWARE\CAN\motor_control.h
 ..\obj\motor_control.o: ..\HARDWARE\CAN\config.h
