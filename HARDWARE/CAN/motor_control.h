@@ -2,7 +2,7 @@
 #define __MOTOR_CONTROL_H
 #include "config.h"
 //----------------------------------------------------------------
-//定义电机ID枚举列表；1-8
+//露篓脪氓碌莽禄煤ID脙露戮脵脕脨卤铆拢禄1-8
 /**
 * --------------------
 * D1	D2	D3	D4	MODE
@@ -108,7 +108,7 @@ motor_state Single_loop_angleControl_1(MotorId Motor_ID, uint8_t spinDirection, 
 motor_state Single_loop_angleControl_2(MotorId Motor_ID, uint8_t spinDirection, uint16_t maxSpeed, uint16_t angleControl);
 
 void Motor_open_fanction_uart(uint8_t *buf,uint8_t size);  
-
+int multiTurnEncoder(int currentEncoderValue);
 void Error_Handler();
 
 #endif
