@@ -1246,7 +1246,13 @@ void Motor_open_fanction_uart(uint8_t *buf,uint8_t size)
     }
   default:
     break;
-  }                
+  }
+   //仅测试使用，可以使用位置控制函数来得到outputstate.encoder，通过这个数据来计算多圈编码器值，后续可将串口上报encoder信息更替为该函数返回值
+   //进行多圈数据获取必须要至少每半圈获得一次enocoder值，否则计算出错，建议上位机20ms发送一次相关指令，来获取参数
+   //start --------------get multiTurnEncoder demo---------------
+   printf("multiTurnEncoder_value = %d",multiTurnEncoder(uart_get_encoder.encoder)); //It must be used once in 20ms to output correctly
+//    printf("multiTurnEncoder_value = %d",multiTurnEncoder(outputstate.encoder)); //It must be used once in 20ms to output correctly
+   //end   --------------get multiTurnEncoder demo---------------
 }
 
 //================================================================  
