@@ -1248,3 +1248,24 @@ void Motor_open_fanction_uart(uint8_t *buf,uint8_t size)
     break;
   }                
 }
+
+//================================================================  
+/* change encoder value  to multi Turn Encoder value */
+// input : currentEncoderValue
+// return : multiTurnEncoderValue
+//================================================================  
+#define ENCODER_RANGE 182 //编码器检测范围
+extern int global_prevEncoderValue;//初始角度，可标定，默认为0(在main.c里定义)，由下位机进行标定
+int multiTurnEncoder(int currentEncoderValue)
+{
+    int prevEncoderValue = global_prevEncoderValue;
+    global_prevEncoderValue = currentEncoderValue;
+    int encoderDelta = (currentEncoderValue - prevEncoderValue + ENCODER_RANGE) % ENCODER_RANGE;//计算差值
+    static int multiTurnEncoderValue = 0;
+
+    if (encoderDelta > (ENCODER_RANGE / 2))//要求每次差值在半圈以内，否为认定为反转
+        encoderDelta -= ENCODER_RANGE;
+
+    multiTurnEncoderValue += encoderDelta;//累加每次差值
+    return multiTurnEncoderValue ;//返回多圈编码器计数值
+}
