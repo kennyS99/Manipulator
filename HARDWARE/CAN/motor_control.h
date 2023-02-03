@@ -18,6 +18,8 @@
 *
 */
 //----------------------------------------------------------------
+#define REAL_USED_MOTOR_NUM	   3
+
 typedef enum
 {
     _MOTOR_NUMBER_1 = 1,
@@ -28,6 +30,7 @@ typedef enum
     _MOTOR_NUMBER_6,
     _MOTOR_NUMBER_7,
     _MOTOR_NUMBER_8,
+		_MOTOR_NUMBER_MAX = _MOTOR_NUMBER_8,
 }MotorId;
 
 typedef union
@@ -60,8 +63,9 @@ typedef struct
     uint16_t encoder;
     uint16_t encoderRaw;
     uint16_t encoderOffset;
-
+		int64_t	 real_encoder;
 }motor_Encoder;
+extern motor_Encoder uart_get_encoder[_MOTOR_NUMBER_MAX];
 
 typedef struct
 {

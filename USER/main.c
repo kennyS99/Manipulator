@@ -6,6 +6,7 @@
 #include "key.h"
 #include "lcd.h"
 #include "can.h"
+#include "timer.h"
 #include "motor_control.h"
 /************************************************
 User manual：
@@ -15,6 +16,7 @@ motor control command: below is a example for motor speed contro,data=2000，
 01000010200000000000*/
 
 /*************************************************/
+#define TIME3_COUNT	    15 //定时器计数15ms，用于获取编码器初始encoder
 
 int main(void)
 {
@@ -37,7 +39,8 @@ int main(void)
 	
 	LED_Init();						//初始化LED	
 	KEY_Init();						//初始化KEY
- 	LCD_Init();           			//初始化LCD
+  TIM3_Init(TIME3_COUNT-1,8400-1);       //定时器3初始化，定时器时钟为84M，分频系数为8400-1，
+                                    //所以定时器3的频率为84M/8400=10K-->0.01ms，自动重装载为5000-1，那么定时器周期就是500ms-->5000*0.01ms,此时的5000==TIME3_COUNT
 	
  	CAN1_Mode_Init(CAN_SJW_1TQ,CAN_BS2_3TQ,CAN_BS1_3TQ,6,CAN_MODE_NORMAL); //CAN初始化,波特率1000Kbps     
 	CAN_Config();
