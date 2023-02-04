@@ -4,7 +4,7 @@
 ..\obj\usmart_str.o: ..\USER\stm32f4xx.h
 ..\obj\usmart_str.o: ..\USER\stm32f407xx.h
 ..\obj\usmart_str.o: ..\CORE\core_cm4.h
-..\obj\usmart_str.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stdint.h
+..\obj\usmart_str.o: D:\ARM\ARMCC\Bin\..\include\stdint.h
 ..\obj\usmart_str.o: ..\CORE\cmsis_version.h
 ..\obj\usmart_str.o: ..\CORE\cmsis_compiler.h
 ..\obj\usmart_str.o: ..\CORE\cmsis_armcc.h
@@ -16,7 +16,7 @@
 ..\obj\usmart_str.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_def.h
 ..\obj\usmart_str.o: ..\USER\stm32f4xx.h
 ..\obj\usmart_str.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\Legacy/stm32_hal_legacy.h
-..\obj\usmart_str.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\stddef.h
+..\obj\usmart_str.o: D:\ARM\ARMCC\Bin\..\include\stddef.h
 ..\obj\usmart_str.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_rcc_ex.h
 ..\obj\usmart_str.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_exti.h
 ..\obj\usmart_str.o: ..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_gpio.h

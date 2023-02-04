@@ -314,7 +314,7 @@ void Read_Encoder(MotorId Motor_ID,motor_Encoder* Encoder)
 	 /* Transmission request Error */
 	 Error_Handler();
  }
- delay_ms(5);//等待5ms，等待接收新数据存入CAN_RX_Buf
+//  delay_ms(5);//等待5ms，等待接收新数据存入CAN_RX_Buf
 	if(CAN1_Receive_Msg(&Get_Std_id,RxData) < 9)//read received information
 	{	
 		printf("CANid:0x%2x, Receive data :",Get_Std_id);		
@@ -326,16 +326,16 @@ void Read_Encoder(MotorId Motor_ID,motor_Encoder* Encoder)
 	}
   if(RxData[0] == 0x90) //判断得到数据为发送的指令的返回值
   {
-    getEncoder.encoder = (RxData[3]<<8)|RxData[2];
+    getEncoder.encoder = ((RxData[3]<<8)|RxData[2]);
     getEncoder.encoderRaw =(RxData[5]<<8)|RxData[4];
     getEncoder.encoderOffset = (RxData[7]<<8)|RxData[6];
     *Encoder = getEncoder;
   }
   else //否则输出0xFF至encoder记录器
   {
-    getEncoder.encoder = 0xFF;
-    getEncoder.encoderRaw = 0xFF;
-    getEncoder.encoderOffset = 0xFF;
+    getEncoder.encoder = 0xFFFF;
+    getEncoder.encoderRaw = 0xFFFF;
+    getEncoder.encoderOffset = 0xFFFF;
     *Encoder = getEncoder;
   }
 }
@@ -1245,7 +1245,7 @@ void Motor_open_fanction_uart(uint8_t *buf,uint8_t size)
     break;
     case 4: //stop the motor
     {
-      Motor_Stop(input.data0);
+      Motor_Stop(input.data0);  
     }
     break;
     case 5:// position control with set speed
@@ -1254,15 +1254,23 @@ void Motor_open_fanction_uart(uint8_t *buf,uint8_t size)
       printf("outputstate.temperature:%d, outputstate.iq:%d, outputstate.speed:%d, outputstate.encoder:%d\r\n",\
       outputstate.temperature,outputstate.iq,outputstate.speed,outputstate.encoder);
     }
+    case 6:
+    {
+      static int64_t uart_get_MotorAngle;
+      Read_MotorAngle(input.data0,&uart_get_MotorAngle);
+      printf("uart_get_MotorAngle:%lld endangle\r\n",uart_get_MotorAngle);
+    }
+    break;
+
   default:
     break;
   }
-   //仅测试使用，可以使用位置控制函数来得到outputstate.encoder，通过这个数据来计算多圈编码器值，后续可将串口上报encoder信息更替为该函数返回值
-   //进行多圈数据获取必须要至少每半圈获得一次enocoder值，否则计算出错，建议上位机20ms发送一次相关指令，来获取参数
-   //start --------------get multiTurnEncoder demo---------------
-   printf("multiTurnEncoder_value = %d",multiTurnEncoder(outputstate.encoder)); //It must be used once in 20ms to output correctly
+//    //仅测试使用，可以使用位置控制函数来得到outputstate.encoder，通过这个数据来计算多圈编码器值，后续可将串口上报encoder信息更替为该函数返回值
+//    //进行多圈数据获取必须要至少每半圈获得一次enocoder值，否则计算出错，建议上位机20ms发送一次相关指令，来获取参数
+//    //start --------------get multiTurnEncoder demo---------------
 //    printf("multiTurnEncoder_value = %d",multiTurnEncoder(outputstate.encoder)); //It must be used once in 20ms to output correctly
-   //end   --------------get multiTurnEncoder demo---------------
+// //    printf("multiTurnEncoder_value = %d",multiTurnEncoder(outputstate.encoder)); //It must be used once in 20ms to output correctly
+//    //end   --------------get multiTurnEncoder demo---------------
 }
 
 //================================================================  
@@ -1270,7 +1278,7 @@ void Motor_open_fanction_uart(uint8_t *buf,uint8_t size)
 // input : currentEncoderValue
 // return : multiTurnEncoderValue
 //================================================================  
-#define ENCODER_RANGE 182 //编码器检测范围
+#define ENCODER_RANGE 65535 //编码器检测范围
 int global_prevEncoderValue = 0;//初始角度，可标定，默认为0(在main.c里定义)，由下位机进行标定
 int multiTurnEncoder(int currentEncoderValue)
 {

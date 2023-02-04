@@ -89,14 +89,14 @@ void HAL_UART_MspInit(UART_HandleTypeDef *huart)
 		__HAL_RCC_GPIOA_CLK_ENABLE();			//使能GPIOA时钟
 		__HAL_RCC_USART1_CLK_ENABLE();			//使能USART1时钟
 	
-		GPIO_Initure.Pin=GPIO_PIN_9;			//PA9
+		GPIO_Initure.Pin=GPIO_PIN_9;			//Pin A9
 		GPIO_Initure.Mode=GPIO_MODE_AF_PP;		//复用推挽输出
 		GPIO_Initure.Pull=GPIO_PULLUP;			//上拉
 		GPIO_Initure.Speed=GPIO_SPEED_FAST;		//高速
 		GPIO_Initure.Alternate=GPIO_AF7_USART1;	//复用为USART1
 		HAL_GPIO_Init(GPIOA,&GPIO_Initure);	   	//初始化PA9
 
-		GPIO_Initure.Pin=GPIO_PIN_10;			//PA10
+		GPIO_Initure.Pin=GPIO_PIN_10;			//Pin A10
 		HAL_GPIO_Init(GPIOA,&GPIO_Initure);	   	//初始化PA10
 		
 #if EN_USART1_RX
