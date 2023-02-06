@@ -1254,7 +1254,7 @@ void Motor_open_fanction_uart(uint8_t *buf,uint8_t size)
       printf("outputstate.temperature:%d, outputstate.iq:%d, outputstate.speed:%d, outputstate.encoder:%d\r\n",\
       outputstate.temperature,outputstate.iq,outputstate.speed,outputstate.encoder);
     }
-    case 6:
+    case 6:// get multiple angle encoder data
     {
       static int64_t uart_get_MotorAngle;
       Read_MotorAngle(input.data0,&uart_get_MotorAngle);
@@ -1265,34 +1265,7 @@ void Motor_open_fanction_uart(uint8_t *buf,uint8_t size)
   default:
     break;
   }
-//    //仅测试使用，可以使用位置控制函数来得到outputstate.encoder，通过这个数据来计算多圈编码器值，后续可将串口上报encoder信息更替为该函数返回值
-//    //进行多圈数据获取必须要至少每半圈获得一次enocoder值，否则计算出错，建议上位机20ms发送一次相关指令，来获取参数
-//    //start --------------get multiTurnEncoder demo---------------
-//    printf("multiTurnEncoder_value = %d",multiTurnEncoder(outputstate.encoder)); //It must be used once in 20ms to output correctly
-// //    printf("multiTurnEncoder_value = %d",multiTurnEncoder(outputstate.encoder)); //It must be used once in 20ms to output correctly
-//    //end   --------------get multiTurnEncoder demo---------------
+
 }
 
-//================================================================  
-/* change encoder value  to multi Turn Encoder value */
-// input : currentEncoderValue
-// return : multiTurnEncoderValue
-//================================================================  
-#define ENCODER_RANGE 65535 //编码器检测范围
-int global_prevEncoderValue = 0;//初始角度，可标定，默认为0(在main.c里定义)，由下位机进行标定
-int multiTurnEncoder(int currentEncoderValue)
-{
-		int encoderDelta,prevEncoderValue;
-		static int multiTurnEncoderValue = 0;
-    prevEncoderValue = global_prevEncoderValue;
-    global_prevEncoderValue = currentEncoderValue;
-    encoderDelta = (currentEncoderValue - prevEncoderValue + ENCODER_RANGE) % ENCODER_RANGE;//计算差值
-    
-
-    if (encoderDelta > (ENCODER_RANGE / 2))//要求每次差值在半圈以内，否为认定为反转
-        encoderDelta -= ENCODER_RANGE;
-
-    multiTurnEncoderValue += encoderDelta;//累加每次差值
-    return multiTurnEncoderValue ;//返回多圈编码器计数值
-}
 
