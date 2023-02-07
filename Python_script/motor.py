@@ -1,14 +1,14 @@
-import serial as ser # 导入串口包
+import serial as ser 
 
 try:
     se = ser.Serial(port="/dev/ttyACM1",baudrate=115200,timeout = 5)  # 开启com3口，波特率115200，超时5
-    se.flushInput()  # 清空缓冲区
-    print("serial open success!")
+    se.flushInput()  # clean the contents of the serial buffer
+    print("connected to: " + se.portstr)
 except:
     print("serial open fail!")
     exit(1)
     
-########################打包函数######################################   
+##############################################################   
 class Motor_control(object):
     def __init__(self, motorID):
         self.motorID = motorID
@@ -35,7 +35,7 @@ class Motor_control(object):
         for i in range(2):
             uart_send(6,data)
 
-########################打包函数######################################  
+##############################################################  
 def to_2d_array(num):
     num_str = str(num).zfill(5)
     return [[int(num_str[i + j]) for i in range(0, 5, 5)] for j in range(5)]
@@ -49,21 +49,24 @@ def uart_send(id,data):
     memory = to_2d_array(data[0])+to_2d_array(data[1])+to_2d_array(data[2])+to_2d_array(data[3])
     to_1d_array = sum(memory, [])
     to_str = ''.join([str(x) for x in to_1d_array])
-    print(id_end + to_str)
-        # print("data_end:", i,data_end[i])    
-    # se.write((id_end+str(data_end[0])+str(data_end[1])+str(data_end[2])+str(data_end[3])+"*/").encode('ascii')) 
+    total_data = id_end + to_str
+    print(total_data) 
+    se.write((total_data+"*/").encode('utf-8')) 
 
-def uart_get(data):
-    ptr = ['null','temp','iq','speed','encoder','']
-    data = str(data, encoding="'ISO-8859-1'")
-    change_data = data[data.find('outputstate.temperature'):data.find('outputstate_end')]
-    print ("change_data--->",change_data)
-
-    if 'outputstate' in change_data:
-            line1 = str(change_data)
-            ouput_data = line1.split('outputstate.')
-            for i in range(5):
-                print("outputstate%d-->"%i, ouput_data[i])
-                ouput_data[i] = re.sub("\D", "", ouput_data[i])
-                print("outputstate.%s-->"%ptr[i],ouput_data[i])
-            return ouput_data
+def uart_get():
+    data = se.readline().decode('utf-8')
+    data = data.replace(" outputstate.","")
+    data = data.replace("uart_get_","")
+    lst = data.strip().split(',')
+    for i in lst:
+        if i.find("temperature") != -1:
+            print(i,end=', ')
+        if i.find("iq") != -1:
+            print(i,end=', ')
+        if i.find("speed") != -1:
+            print(i,end=', ')
+        if i.find("encoder") != -1:
+            print(i,end=', ')
+        if i.find("MotorAngle") != -1:
+            print(i,end=', ')
+            

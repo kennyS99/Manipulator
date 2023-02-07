@@ -1227,8 +1227,8 @@ void Motor_open_fanction_uart(uint8_t *buf,uint8_t size)
  {
     static motor_pid uart_get_pid;
     Read_PID(input.data0,&uart_get_pid);
-    printf("uart_get_pid.anglePidKi:%d, uart_get_pid.anglePidKp:%d\r\n\
-            uart_get_pid.iqPidKi:%d, uart_get_pid.iqPidKp:%d\r\n\
+    printf("uart_get_pid.anglePidKi:%d, uart_get_pid.anglePidKp:%d\
+            uart_get_pid.iqPidKi:%d, uart_get_pid.iqPidKp:%d\
             uart_get_pid.speedPidKi:%d,uart_get_pid.speedPidKp:%d\r\n",\
             uart_get_pid.anglePidKi,uart_get_pid.anglePidKp,\
             uart_get_pid.iqPidKi,uart_get_pid.iqPidKp,\
@@ -1238,9 +1238,11 @@ void Motor_open_fanction_uart(uint8_t *buf,uint8_t size)
    case 3: //get encoder state
    {
     Read_Encoder(input.data0,&uart_get_encoder[input.data0]);
-    printf("uart_get_encoder.encoder:%d, uart_get_encoder.encoderRaw:%d\r\n\
+    printf("uart_get_encoder.encoder:%d, uart_get_encoder.encoderRaw:%d\
             uart_get_encoder.encoderOffset:%d\r\n",\
-            uart_get_encoder[input.data0].encoder, uart_get_encoder[input.data0].encoderRaw, uart_get_encoder[input.data0].encoderOffset);
+            uart_get_encoder[input.data0].encoder,\
+            uart_get_encoder[input.data0].encoderRaw,\
+            uart_get_encoder[input.data0].encoderOffset);
    }
     break;
     case 4: //stop the motor
