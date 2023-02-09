@@ -1,11 +1,12 @@
 import serial as ser 
 
 try:
-    se = ser.Serial(port="/dev/ttyACM1",baudrate=115200,timeout = 5)  # 开启com3口，波特率115200，超时5
+    se = ser.Serial(port="/dev/ttyTHS1",baudrate=115200,timeout = 5)  # 开启com3口，波特率115200，超时5
     se.flushInput()  # clean the contents of the serial buffer
     print("connected to: " + se.portstr)
-except:
-    print("serial open fail!")
+except Exception as e:
+    print(str(e))
+    print("serial open fail! Use sudo chmod 777 /dev/ttyTHS1 to give permission for USART")
     exit(1)
     
 ##############################################################   
@@ -18,7 +19,7 @@ class Motor_control(object):
         data = [0,0,0,0]
         data[0] = self.motorID
         data[1] = motorSpeed * 100
-        for i in range(2):
+        for i in range(1):
             uart_send(1,data)
         print("speed_control-->motor_id=%d,speed=%d"%(self.motorID,motorSpeed))
     
@@ -49,12 +50,12 @@ def uart_send(id,data):
     memory = to_2d_array(data[0])+to_2d_array(data[1])+to_2d_array(data[2])+to_2d_array(data[3])
     to_1d_array = sum(memory, [])
     to_str = ''.join([str(x) for x in to_1d_array])
-    total_data = id_end + to_str
+    total_data = str(id_end + to_str) + "*/"
     print(total_data) 
-    se.write((total_data+"*/").encode('utf-8')) 
+    se.write(total_data.encode(' ascii')) 
 
 def uart_get():
-    data = se.readline().decode('utf-8')
+    data = se.readline().decode('UTF-8')
     data = data.replace(" outputstate.","")
     data = data.replace("uart_get_","")
     lst = data.strip().split(',')
