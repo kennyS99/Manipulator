@@ -27,3 +27,22 @@ print("Theta3 (in degrees):", theta3_deg)
 
 
 
+# function q = calc_ikine(px,py,pz)
+
+# l1 = 0; l2=1; l3=1;
+
+# % ------------------------%
+# theta1 = atan2(py,px);
+
+# x = px - l1*cos(theta1);
+# y = py - l1*sin(theta1);
+# z = pz;
+
+# D = (x^2 + y^2 + z^2 - l2^2 - l3^2)/(2*l2*l3);
+
+# theta3 = + atan2(sqrt(1-D^2),D);
+
+# theta2 =  atan2(z,sqrt(x^2+y^2)) - atan2(l3*sin(theta3),l2+l3*cos(theta3));
+
+# q = [theta1;theta2;theta3];
+# end
