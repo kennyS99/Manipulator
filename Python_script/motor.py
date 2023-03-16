@@ -29,14 +29,17 @@ class Motor_control(object):
     def angle_control(self, motorSpeed, motorAngle):
         data = [0,0,0,0]
         data[0] = self.motorID
-        data[1] = motorSpeed * 100
+        data[1] = motorSpeed
         if motorAngle > 0:
             new_motorAngle = "1" + str(motorAngle) + "00"
         elif motorAngle < 0:
+            
             new_motorAngle = "0" + str(abs(motorAngle)) + "00"
         elif motorAngle == 0:
             new_motorAngle = "00000" + str(motorAngle)
+        # print("new_motorAngle =" + new_motorAngle)
         data[2] = int(new_motorAngle)
+        print("new_motorAngle =" + str(data[2]))
         for x in range(0, 2):
             uart_send(5,data)
 
