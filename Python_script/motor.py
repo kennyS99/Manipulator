@@ -1,11 +1,11 @@
 import serial as ser 
 
 try:
-    se = ser.Serial(port="/dev/ttyACM1",baudrate=115200,timeout = 5)  # 开启com3口，波特率115200，超时5
+    se = ser.Serial(port="/dev/ttyTHS2",baudrate=115200,timeout = 5)  # 开启com3口，波特率115200，超时5
     se.flushInput()  # clean the contents of the serial buffer
     print("connected to: " + se.portstr)
-except:
-    print("serial open fail!")
+except Exception as e:
+    print(str(e))
     exit(1)
     
 ##############################################################   
@@ -18,22 +18,27 @@ class Motor_control(object):
         data = [0,0,0,0]
         data[0] = self.motorID
         data[1] = motorSpeed * 100
-        for i in range(2):
+        for x in range(0, 2):
             uart_send(1,data)
-        print("speed_control-->motor_id=%d,speed=%d"%(self.motorID,motorSpeed))
-    
+        # print("speed_control-->motor_id=%d,speed=%d"%(self.motorID,motorSpeed))
+    def motor_stop(self):
+        data = [0,0,0,0]
+        data[0] = self.motorID
+        for x in range(0, 2):
+            uart_send(4,data)
     def angle_control(self, motorSpeed, motorAngle):
         data = [0,0,0,0]
         data[0] = self.motorID
         data[1] = motorSpeed * 100
-        if motorAngle >= 0:
-            new_motorAngle = "1" + str(motorAngle * 100)
-        else:
+        if motorAngle > 0:
+            new_motorAngle = "1" + str(motorAngle) + "00"
+        elif motorAngle < 0:
             new_motorAngle = "0" + str(abs(motorAngle)) + "00"
-        data[5] = new_motorAngle
-        print(data)
-        for i in range(2):
-            uart_send(6,data)
+        elif motorAngle == 0:
+            new_motorAngle = "00000" + str(motorAngle)
+        data[2] = int(new_motorAngle)
+        for x in range(0, 2):
+            uart_send(5,data)
 
 ##############################################################  
 def to_2d_array(num):
@@ -49,13 +54,15 @@ def uart_send(id,data):
     memory = to_2d_array(data[0])+to_2d_array(data[1])+to_2d_array(data[2])+to_2d_array(data[3])
     to_1d_array = sum(memory, [])
     to_str = ''.join([str(x) for x in to_1d_array])
-    total_data = id_end + to_str
-    print(total_data) 
-    se.write((total_data+"*/").encode('utf-8')) 
+    total_data = str(id_end + to_str) + "*/"
+     
+    se.write(total_data.encode('utf-8')) 
 
 def uart_get():
-    data = se.readline().decode('utf-8')
+    bytesToRead = se.inWaiting()
+    data = se.read(bytesToRead).decode('UTF-8')
     data = data.replace(" outputstate.","")
+    data = data.replace("outputstate.","")
     data = data.replace("uart_get_","")
     lst = data.strip().split(',')
     for i in lst:
