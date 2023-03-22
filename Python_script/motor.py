@@ -33,15 +33,19 @@ class Motor_control(object):
         #136000 is negative
         #236000 is positive
         if motorAngle > 0:
-            new_motorAngle = "2" + str(motorAngle) + "00"
+            if motorAngle >= 100:
+                new_motorAngle = "2" + str(motorAngle) + "00"
+            else:
+                new_motorAngle = "2" + "0" + str(motorAngle) + "00"
         elif motorAngle < 0:
-            
-            new_motorAngle = "1" + str(abs(motorAngle)) + "00"
+            if motorAngle > -100:
+                new_motorAngle = "1" + "0" + str(abs(motorAngle)) + "00"
+            else:
+                new_motorAngle = "1" + str(abs(motorAngle)) + "00"
         elif motorAngle == 0:
             new_motorAngle = "00000" + str(motorAngle)
         # print("new_motorAngle =" + new_motorAngle)
         data[2] = int(new_motorAngle)
-        print("new_motorAngle =" + str(data[2]))
         for x in range(0, 2):
             uart_send(5,data)
             

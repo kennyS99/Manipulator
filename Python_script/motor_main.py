@@ -12,7 +12,9 @@ def main():
     try:
         while True:          
             angle = int(input("Enter angle: "))
-            motor1.angle_control(angle,0)
+            motor1.angle_control(360,angle)
+            time.sleep(0.5)
+            # motor1.get_multileAngle()
             uart_get()
             time.sleep(0.5)
     except KeyboardInterrupt:
