@@ -2,7 +2,7 @@
 #include "usart.h"
 #include "delay.h"
 #include "motor_control.h"
- 
+#include "stm32f4xx_hal.h"
 extern UART_HandleTypeDef huart1;//not use
 
 CAN_TxHeaderTypeDef TxHeader;
@@ -1256,6 +1256,7 @@ void Motor_open_fanction_uart(uint8_t *buf,uint8_t size)
       printf("outputstate.temperature:%d, outputstate.iq:%d, outputstate.speed:%d, outputstate.encoder:%d\r\n",\
       outputstate.temperature,outputstate.iq,outputstate.speed,outputstate.encoder);
     }
+    break;
     case 6:// get multiple angle encoder data
     {
       static int64_t uart_get_MotorAngle;

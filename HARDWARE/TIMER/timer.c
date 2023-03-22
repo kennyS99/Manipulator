@@ -64,11 +64,11 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     {
 				LED1=!LED1;        //LED1·´×ª
 				i++;
-				Read_Encoder(i,&uart_get_encoder[i]);
-				uart_get_encoder[i].real_encoder = multiTurnEncoder(uart_get_encoder[i].encoder);
-			printf("--->the motor_num:%d,real_encoder:%lld,pre_encoder:%d---< endprinfdata\r\n",i,uart_get_encoder[i].real_encoder,uart_get_encoder[i].encoder);
-				if(i == REAL_USED_MOTOR_NUM)
-					i=0;
+			//	Read_Encoder(i,&uart_get_encoder[i]);
+			//	uart_get_encoder[i].real_encoder = multiTurnEncoder(uart_get_encoder[i].encoder);
+			 // printf("--->the motor_num:%d,real_encoder:%lld,pre_encoder:%d---< endprinfdata\r\n",i,uart_get_encoder[i].real_encoder,uart_get_encoder[i].encoder);
+				//if(i == REAL_USED_MOTOR_NUM)
+				//	i=0;
 			
     }
 }

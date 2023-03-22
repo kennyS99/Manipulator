@@ -44,6 +44,12 @@ class Motor_control(object):
         print("new_motorAngle =" + str(data[2]))
         for x in range(0, 2):
             uart_send(5,data)
+            
+    def get_multileAngle(self):
+        data = [0,0,0,0]
+        data[0] = self.motorID
+        for x in range(0, 2):
+            uart_send(6,data)
 
 ##############################################################  
 def to_2d_array(num):

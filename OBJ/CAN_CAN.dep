@@ -1,6 +1,6 @@
 Dependencies for Project 'CAN', Target 'CAN': (DO NOT MODIFY !)
 CompilerVersion: 5060750::V5.06 update 6 (build 750)::.\ARMCC
-F (.\main.c)(0x63DDB237)(-c --cpu Cortex-M4.fp.sp -D__EVAL -g -O2 --apcs=interwork --split_sections -I ..\CORE -I ..\OBJ -I ..\USER -I ..\USMART -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\HALLIB\STM32F4xx_HAL_Driver\Inc -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\LCD -I ..\HARDWARE\CAN -I ..\HARDWARE\TIMER-IC:\Users\27129\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-ID:\ARM\CMSIS\Include-IC:\Users\27129\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Device\Include-D__UVISION_VERSION="531" -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o ..\obj\main.o --depend ..\obj\main.d)
+F (.\main.c)(0x63E068C6)(-c --cpu Cortex-M4.fp.sp -D__EVAL -g -O2 --apcs=interwork --split_sections -I ..\CORE -I ..\OBJ -I ..\USER -I ..\USMART -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\HALLIB\STM32F4xx_HAL_Driver\Inc -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\LCD -I ..\HARDWARE\CAN -I ..\HARDWARE\TIMER-IC:\Users\27129\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-ID:\ARM\CMSIS\Include-IC:\Users\27129\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Device\Include-D__UVISION_VERSION="531" -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o ..\obj\main.o --depend ..\obj\main.d)
 I (..\SYSTEM\sys\sys.h)(0x63D9BBBC)
 I (..\USER\stm32f4xx.h)(0x63D9BBBC)
 I (..\USER\stm32f407xx.h)(0x63D9BBBC)
@@ -1517,7 +1517,7 @@ I (..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd.h)(0x63D9BBBC)
 I (..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_ll_usb.h)(0x63D9BBBC)
 I (..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_pcd_ex.h)(0x63D9BBBC)
 I (..\HALLIB\STM32F4xx_HAL_Driver\Inc\stm32f4xx_hal_hcd.h)(0x63D9BBBC)
-F (..\SYSTEM\usart\usart.c)(0x63D9BBBC)(-c --cpu Cortex-M4.fp.sp -D__EVAL -g -O2 --apcs=interwork --split_sections -I ..\CORE -I ..\OBJ -I ..\USER -I ..\USMART -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\HALLIB\STM32F4xx_HAL_Driver\Inc -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\LCD -I ..\HARDWARE\CAN -I ..\HARDWARE\TIMER-IC:\Users\27129\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-ID:\ARM\CMSIS\Include-IC:\Users\27129\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Device\Include-D__UVISION_VERSION="531" -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o ..\obj\usart.o --depend ..\obj\usart.d)
+F (..\SYSTEM\usart\usart.c)(0x63DDD9AB)(-c --cpu Cortex-M4.fp.sp -D__EVAL -g -O2 --apcs=interwork --split_sections -I ..\CORE -I ..\OBJ -I ..\USER -I ..\USMART -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\HALLIB\STM32F4xx_HAL_Driver\Inc -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\LCD -I ..\HARDWARE\CAN -I ..\HARDWARE\TIMER-IC:\Users\27129\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-ID:\ARM\CMSIS\Include-IC:\Users\27129\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Device\Include-D__UVISION_VERSION="531" -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o ..\obj\usart.o --depend ..\obj\usart.d)
 I (..\SYSTEM\usart\usart.h)(0x63D9BBBC)
 I (..\SYSTEM\sys\sys.h)(0x63D9BBBC)
 I (..\USER\stm32f4xx.h)(0x63D9BBBC)
@@ -1864,7 +1864,7 @@ I (..\SYSTEM\usart\usart.h)(0x63D9BBBC)
 I (D:\ARM\ARMCC\include\stdio.h)(0x5EC775FC)
 I (..\SYSTEM\delay\delay.h)(0x63D9BBBC)
 I (..\HARDWARE\LED\led.h)(0x63D9BBBC)
-F (..\HARDWARE\CAN\motor_control.c)(0x63DDD738)(-c --cpu Cortex-M4.fp.sp -D__EVAL -g -O2 --apcs=interwork --split_sections -I ..\CORE -I ..\OBJ -I ..\USER -I ..\USMART -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\HALLIB\STM32F4xx_HAL_Driver\Inc -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\LCD -I ..\HARDWARE\CAN -I ..\HARDWARE\TIMER-IC:\Users\27129\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-ID:\ARM\CMSIS\Include-IC:\Users\27129\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Device\Include-D__UVISION_VERSION="531" -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o ..\obj\motor_control.o --depend ..\obj\motor_control.d)
+F (..\HARDWARE\CAN\motor_control.c)(0x641A80FB)(-c --cpu Cortex-M4.fp.sp -D__EVAL -g -O2 --apcs=interwork --split_sections -I ..\CORE -I ..\OBJ -I ..\USER -I ..\USMART -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\HALLIB\STM32F4xx_HAL_Driver\Inc -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\LCD -I ..\HARDWARE\CAN -I ..\HARDWARE\TIMER-IC:\Users\27129\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-ID:\ARM\CMSIS\Include-IC:\Users\27129\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Device\Include-D__UVISION_VERSION="531" -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o ..\obj\motor_control.o --depend ..\obj\motor_control.d)
 I (..\HARDWARE\CAN\can.h)(0x63D9BBBC)
 I (..\SYSTEM\sys\sys.h)(0x63D9BBBC)
 I (..\USER\stm32f4xx.h)(0x63D9BBBC)
@@ -1937,7 +1937,7 @@ I (..\SYSTEM\delay\delay.h)(0x63D9BBBC)
 I (..\HARDWARE\CAN\motor_control.h)(0x63DDBE20)
 I (..\HARDWARE\CAN\config.h)(0x63D9BBBC)
 I (..\USER\main.h)(0x63D9BBBC)
-F (..\HARDWARE\TIMER\timer.c)(0x63DDB1A6)(-c --cpu Cortex-M4.fp.sp -D__EVAL -g -O2 --apcs=interwork --split_sections -I ..\CORE -I ..\OBJ -I ..\USER -I ..\USMART -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\HALLIB\STM32F4xx_HAL_Driver\Inc -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\LCD -I ..\HARDWARE\CAN -I ..\HARDWARE\TIMER-IC:\Users\27129\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-ID:\ARM\CMSIS\Include-IC:\Users\27129\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Device\Include-D__UVISION_VERSION="531" -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o ..\obj\timer.o --depend ..\obj\timer.d)
+F (..\HARDWARE\TIMER\timer.c)(0x641A59C3)(-c --cpu Cortex-M4.fp.sp -D__EVAL -g -O2 --apcs=interwork --split_sections -I ..\CORE -I ..\OBJ -I ..\USER -I ..\USMART -I ..\SYSTEM\delay -I ..\SYSTEM\sys -I ..\SYSTEM\usart -I ..\HALLIB\STM32F4xx_HAL_Driver\Inc -I ..\HARDWARE\LED -I ..\HARDWARE\KEY -I ..\HARDWARE\LCD -I ..\HARDWARE\CAN -I ..\HARDWARE\TIMER-IC:\Users\27129\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Drivers\CMSIS\Device\ST\STM32F4xx\Include-ID:\ARM\CMSIS\Include-IC:\Users\27129\AppData\Local\Arm\Packs\Keil\STM32F4xx_DFP\2.15.0\Device\Include-D__UVISION_VERSION="531" -DSTM32F407xx -DUSE_HAL_DRIVER -DSTM32F407xx-o ..\obj\timer.o --depend ..\obj\timer.d)
 I (..\HARDWARE\TIMER\timer.h)(0x63DDAFC4)
 I (..\SYSTEM\sys\sys.h)(0x63D9BBBC)
 I (..\USER\stm32f4xx.h)(0x63D9BBBC)
