@@ -1257,7 +1257,7 @@ void Motor_open_fanction_uart(uint8_t *buf,uint8_t size)
       outputstate.temperature,outputstate.iq,outputstate.speed,outputstate.encoder);
     }
     break;
-    case 6:// get multiple angle encoder data
+    case 6:// get multiple angle data
     {
       static int64_t uart_get_MotorAngle;
       Read_MotorAngle(input.data0,&uart_get_MotorAngle);
