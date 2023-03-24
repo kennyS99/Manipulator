@@ -1,32 +1,22 @@
-from motor import *  # 导入串口包
-
 import time  # 导入时间包 
-
-
-
+# from motor import *  # 导入串口包
+from gui import MotorControlGUI
 def main():
-    # motor1 = Motor_control(1)
-    # motor1 = Motor_control(1)
-    # motor2 = Motor_control(2)
-    # motor3 = Motor_control(3)
-    # motor3 = Motor_control(3)
-    # motor1.speed_control(360)
     try:
+        # create a MotorControlGUI instance to get user input and display motor ID and angle
+        gui = MotorControlGUI()
         while True:          
-            motorID = int(input("Enter motorID: "))
-            motor = Motor_control(motorID)
-            time.sleep(0.5)
-            angle = int(input("Enter angle: "))
-            motor.angle_control(200,angle)
-            # motor1.get_multileAngle()
-            time.sleep(0.5)
-            uart_get()
+            motorID = gui.selected_motor + 1
+            angle = gui.outputs[gui.selected_motor]
+            print(f"Set motor {motorID} to {angle}")
+            # motor = Motor_control(motorID)
+            # motor.angle_control(200, angle)
+            # motor.get_multileAngle()
+            # uart_get()
             time.sleep(0.5)
     except KeyboardInterrupt:
         print("Exiting program.")
 
-    
 
 if __name__ == '__main__':
     main()
-
