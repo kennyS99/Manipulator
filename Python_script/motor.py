@@ -1,7 +1,7 @@
 import serial as ser 
 #/dev/ttyTHS2
 try:
-    se = ser.Serial(port="/dev/ttyUSB0",baudrate=115200,timeout = 5)  # 开启com3口，波特率115200，超时5
+    se = ser.Serial(port="/dev/ttyUSB1",baudrate=115200,timeout = 5)  # 开启com3口，波特率115200，超时5
     se.flushInput()  # clean the contents of the serial buffer
     print("connected to: " + se.portstr)
 except Exception as e:
